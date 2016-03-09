@@ -5,14 +5,16 @@
 }
 
 <style type="text/css">
-    #nav {
+    #nav
+    {
         margin: 0;
         padding: 0;
         list-style: none;
         text-align: center;
     }
 
-        #nav li {
+        #nav li
+        {
             margin: 10px;
             padding: 0;
             width: 10em;
@@ -21,15 +23,18 @@
             vertical-align: top;
         }
 
-        #nav h3 {
+        #nav h3
+        {
             height: 20px;
         }
 
-        #nav h4 {
+        #nav h4
+        {
             height: 40px;
         }
 
-        #nav p {
+        #nav p
+        {
             height: 70px;
         }
 </style>
@@ -44,9 +49,9 @@
         <li>
             <div>
                 <img src="@Url.Content("~/Content/themes/base/images/" + item.Icon)" alt="@item.Name" />
-                @*<h3>@Html.ActionLink(item.Name, item.Name, "Product", item, string.Empty)</h3>*@
+                @*</h3>*@
                 <h3>@item.Name</h3>
-                @*<h3>@Ajax.ActionLink(item.Name, item.Name, "Product", new AjaxOptions { UpdateTargetId = "productDetail" })</h3>*@
+                @*</h3>*@
                 <h4>@item.PunchLine</h4>
                 <p>@item.Message</p>
                 <h3>$@item.Price</h3>

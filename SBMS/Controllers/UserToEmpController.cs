@@ -1,7 +1,7 @@
-﻿using SBMS.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Security;
+using SBMS.Models;
 
 namespace SBMS.Controllers
 {

@@ -27,3 +27,15 @@ C:\Users\Paarth Toraskar\Documents\Grad School Projects\SBMS\Client\obj\Debug\Cl
 C:\Users\Paarth Toraskar\Documents\Grad School Projects\SBMS\Client\obj\Debug\WpfApp.exe
 C:\Users\Paarth Toraskar\Documents\Grad School Projects\SBMS\Client\obj\Debug\WpfApp.pdb
 C:\Users\Paarth Toraskar\Documents\Grad School Projects\SBMS\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\bin\Debug\WpfApp.exe.config
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\bin\Debug\WpfApp.exe
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\bin\Debug\WpfApp.pdb
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\FileHandler.baml
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\FileHandler.g.cs
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\App.g.cs
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\WpfApp_MarkupCompile.cache
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\WpfApp.g.resources
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\WpfApp.Properties.Resources.resources
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\WpfApp.exe
+C:\Users\ptoraskar\Documents\Visual Studio 2012\Projects\SBMS\Client\obj\Debug\WpfApp.pdb

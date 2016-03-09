@@ -1,7 +1,7 @@
-﻿using SBMS.Models;
-using System.Data;
+﻿using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using SBMS.Models;
 
 namespace SBMS.Controllers
 {
