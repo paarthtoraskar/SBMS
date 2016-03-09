@@ -1,0 +1,12 @@
+﻿@model SBMS.Models.ContractProposal
+
+@{
+    ViewBag.Title = "Your contract proposal has been accepted!";
+}
+
+<h6>You may view details of our contract and add notes @Html.ActionLink("here.", "Details", "ContractProposal", new { id = Model.ContractProposalId }, null)</h6>
+<h6>You may view details about the ongoing proceedings of your project @Html.ActionLink("here.", "DetailsForCustomerView", "Project")</h6>
+
+@*<p>@Html.ActionLink("ContractProposal View here", "Details", "ContractProposal", new { id = Model.ContractProposalId }, null)</p>*@
+
+@*<p>@Html.ActionLink("Project View here", "DetailsForCustomerView", "Project")</p>*@

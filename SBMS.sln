@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBMS", "SBMS\SBMS.csproj", "{859B22A3-8723-4840-92C9-EF938827A2F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPLab11_WebAPI", "IPLab11\IPLab11_WebAPI.csproj", "{67180376-EC99-4FBE-8743-73436757A13F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{0E816536-F392-4099-B8CC-BE021E234258}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{859B22A3-8723-4840-92C9-EF938827A2F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859B22A3-8723-4840-92C9-EF938827A2F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859B22A3-8723-4840-92C9-EF938827A2F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859B22A3-8723-4840-92C9-EF938827A2F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67180376-EC99-4FBE-8743-73436757A13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67180376-EC99-4FBE-8743-73436757A13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67180376-EC99-4FBE-8743-73436757A13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67180376-EC99-4FBE-8743-73436757A13F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E816536-F392-4099-B8CC-BE021E234258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E816536-F392-4099-B8CC-BE021E234258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E816536-F392-4099-B8CC-BE021E234258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E816536-F392-4099-B8CC-BE021E234258}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

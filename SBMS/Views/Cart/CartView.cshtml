@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SBMS.Models.Product>
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<style type="text/css">
+    #nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+    }
+
+        #nav li {
+            margin: 10px;
+            padding: 0;
+            width: 10em;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #nav h3 {
+            height: 20px;
+        }
+
+        #nav h4 {
+            height: 40px;
+        }
+
+        #nav p {
+            height: 70px;
+        }
+
+    }
+</style>
+
+@{decimal totalCartPayment = (decimal)Session["TotalCartPayment"];}
+
+@if (totalCartPayment > 0)
+{
+    //ViewBag.Message = "When you are done, hit check out!";
+}
+else
+{
+    ViewBag.Message = "Your cart is empty!";
+}
+
+<ul id="nav">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+        <li>
+            <div>
+                <img src="@Url.Content("~/Content/themes/base/images/" + item.Icon)" alt="@item.Name" />
+                @*<h3>@Html.ActionLink(item.Name, item.Name, "Product", item, string.Empty)</h3>*@
+                <h3>@item.Name</h3>
+                @*<h3>@Ajax.ActionLink(item.Name, item.Name, "Product", new AjaxOptions { UpdateTargetId = "productDetail" })</h3>*@
+                <h4>@item.PunchLine</h4>
+                <p>@item.Message</p>
+                <h3>$@item.Price</h3>
+                <br />
+                <span>@Html.ActionLink("Remove From Cart", "RemoveFromCart", "Cart", new { id = item.ProductId }, string.Empty)</span>
+            </div>
+        </li>
+        }
+    }
+</ul>
+
+<h4>Total amount:
+	$@totalCartPayment
+</h4>
+
+@if ((decimal)Session["TotalCartPayment"] > 0)
+{
+    <span id="checkout">@Html.ActionLink("Checkout", "Create", "Order")</span>
+}

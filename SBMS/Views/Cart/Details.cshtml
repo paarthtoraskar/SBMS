@@ -1,0 +1,26 @@
+﻿@model SBMS.Models.Cart
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>Cart</legend>
+    <div class="display-label">
+        @Html.LabelFor(model => model.CartId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CartId)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Product.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Product.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RecordId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,34 @@
+﻿@model SBMS.Models.Cart
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Cart</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductId, "Product")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ProductId", String.Empty)
+            @Html.ValidationMessageFor(model => model.ProductId)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

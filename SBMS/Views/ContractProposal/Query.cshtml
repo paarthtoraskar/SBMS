@@ -1,0 +1,25 @@
+﻿@model SBMS.Models.ContractProposal
+@{
+    ViewBag.Title = "Query";
+}
+
+@using (Html.BeginForm("Result", "ScheduleBudgetQuery", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ContractProposal</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Username, "Customer name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Username)
+            @Html.ValidationMessageFor(model => model.Username)
+        </div>
+
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+    </fieldset>
+}

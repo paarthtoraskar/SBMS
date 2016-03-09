@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SBMS.Models.Milestone>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Project.ProjectTitle)*@
+            Project Title
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.StatusMessage)*@
+            Status Message
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.CompletionDate)*@
+            Completion Date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusMessage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletionDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MilestoneId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.MilestoneId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MilestoneId })
+            </td>
+        </tr>
+    }
+</table>

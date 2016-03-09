@@ -1,0 +1,44 @@
+﻿@model SBMS.Models.ProjectIssue
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ProjectIssue</legend>
+
+        @Html.HiddenFor(model => model.ProjectIssueId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProjectId, "Project Title")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ContractProposalId", string.Empty)
+            @Html.ValidationMessageFor(model => model.ProjectId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Issue)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Issue)
+            @Html.ValidationMessageFor(model => model.Issue)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<SBMS.Models.CustomerIssue>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Username)
+        </th>
+        @*        <th>
+            @Html.DisplayNameFor(model => model.Issue)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Username)
+            </td>
+            @*            <td>
+                @Html.DisplayFor(modelItem => item.Issue)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerIssueId }) |
+				@Html.ActionLink("Details", "Details", new { id = item.CustomerIssueId }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.CustomerIssueId })
+            </td>
+        </tr>
+    }
+</table>

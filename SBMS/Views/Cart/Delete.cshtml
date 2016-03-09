@@ -1,0 +1,24 @@
+﻿@model SBMS.Models.Cart
+
+@{
+    ViewBag.Title = "Delete Confirmation";
+}
+
+<fieldset>
+    <legend>Cart</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Product.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Product.Name)
+    </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Delete" />
+        |
+		@Html.ActionLink("Back to List", "Index")
+    </p>
+}

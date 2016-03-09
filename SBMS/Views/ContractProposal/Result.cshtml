@@ -1,0 +1,49 @@
+﻿@model SBMS.Models.ContractProposal
+@{
+    ViewBag.Title = "Result";
+}
+
+@if (Model != null)
+{
+    <fieldset>
+        <legend>ContractProposal</legend>
+
+        <div class="display-label">
+            @Html.LabelFor(model => model.Username, "Username")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Username)
+        </div>
+
+        <div class="display-label">
+            @Html.LabelFor(model => model.Title, "Project Title")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Title)
+        </div>
+
+        <div class="display-label">
+            @Html.LabelFor(model => model.StartDate, "Start Date")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.StartDate)
+        </div>
+
+        <div class="display-label">
+            @Html.LabelFor(model => model.EndDate, "End Date")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.EndDate)
+        </div>
+
+        <div class="display-label">
+            @Html.LabelFor(model => model.Budget)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Budget)
+        </div>
+    </fieldset>
+}
+<p>
+    @Html.ActionLink("Another Query", "Query", "ScheduleBudgetQuery")
+</p>

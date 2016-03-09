@@ -1,0 +1,29 @@
+﻿@model SBMS.Models.UserToEmpViewModel
+
+@{
+    ViewBag.Title = "Give Role";
+}
+
+<style>
+    a {
+        text-decoration: none;
+        color: #999;
+    }
+
+        a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+</style>
+
+<h6>Select a user from the drop down list and give hime the role of an employee</h6>
+
+@using (Html.BeginForm("GiveUserEmployeeRole", "UserToEmp", FormMethod.Post))
+{
+    <div class="editor-field">
+        @Html.DropDownList("userProfileToAddToEmp", new SelectList(Model.userProfilesNotInEmp, "UserId", "Username"))
+        @Html.ValidationMessageFor(model => model.userProfileToAddToEmp)
+        @*@Html.ActionLink("Give user the Employee role", "GiveUserEmployeeRole", "UserToEmp")*@
+        <input type="submit" value="Give Role" />
+    </div>
+}

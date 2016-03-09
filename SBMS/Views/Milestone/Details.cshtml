@@ -1,0 +1,41 @@
+﻿@model SBMS.Models.Milestone
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>Milestone</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Project.ProjectTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Project.ProjectTitle)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.StatusMessage)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StatusMessage)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.CompletionDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompletionDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MilestoneId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

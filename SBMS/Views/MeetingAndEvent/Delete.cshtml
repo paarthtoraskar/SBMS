@@ -1,0 +1,31 @@
+﻿@model SBMS.Models.MeetingAndEvent
+
+@{
+    ViewBag.Title = "Delete Confirmation";
+}
+
+<fieldset>
+    <legend>MeetingAndEvent</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Note)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Note)
+    </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Delete" />
+        |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

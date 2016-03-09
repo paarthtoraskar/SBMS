@@ -1,0 +1,48 @@
+﻿@model SBMS.Models.SupportRequest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>SupportRequest</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.FirstName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.LastName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Email)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Product.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Product.Name)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Content)
+    </div>
+    <div class="display-field">
+        @Html.TextAreaFor(model => model.Content)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SupportRequestId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

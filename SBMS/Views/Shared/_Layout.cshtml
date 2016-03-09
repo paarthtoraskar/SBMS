@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Wyze Software</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <header>
+        <div>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p style="vertical-align: bottom;" class="site-title">@Html.ActionLink("Wyze Software", "Catalog", "Product")</p>
+                </div>
+                <div @*class="float-right"*@>
+                    <div id="cart">
+                        @Html.ActionLink("View Cart", "ViewCart", "Cart")
+                        (
+						@{
+                            List<SBMS.Models.Product> products = Session["ProductsInCart"] as List<SBMS.Models.Product>;
+                            if (products != null)
+                            {
+                            @products.Count;
+                            }
+                            else
+                            {
+                                char zero = '0';
+                            @zero;
+                            }
+                        }
+                        )
+                    </div>
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                </div>
+            </div>
+            <ul id="menu">
+                <li>@Html.ActionLink("Catalog", "Catalog", "Product")</li>
+                <li>@Html.ActionLink("Support", "Create", "SupportRequest")</li>
+                @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp") || Roles.IsUserInRole("public"))
+                {
+                    <li>@Html.ActionLink("Contract", "SelectViewBasedOnContractStatus", "ContractProposal")</li>
+                }
+                @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp"))
+                {
+                    <li>
+                        <a href="#">Employee</a>
+                        <ul>
+                            <li>@Html.ActionLink("Support Requests", "Index", "SupportRequest")</li>
+                            <li>@Html.ActionLink("Contract Proposals", "Index", "ContractProposal")</li>
+                            <li>@Html.ActionLink("Query", "Query", "ScheduleBudgetQuery")</li>
+                            <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+                            <li>@Html.ActionLink("Project Milestones", "Index", "Milestone")</li>
+                            <li>@Html.ActionLink("Project Issues", "Index", "ProjectIssue")</li>
+                            <li>@Html.ActionLink("Customers", "Index", "Customer")</li>
+                            <li>@Html.ActionLink("Customer Issues", "Index", "CustomerIssue")</li>
+                            <li>@Html.ActionLink("Meetings And Events", "Index", "MeetingAndEvent")</li>
+                            <li>@Html.ActionLink("File Handler", "StartUtility", "Product")</li>
+                        </ul>
+                    </li>
+                }
+                @if (Roles.IsUserInRole("admin"))
+                {
+                    <li>
+                        <a href="#">Admin</a>
+                        <ul>
+                            <li>@Html.ActionLink("Orders", "Index", "Order")</li>
+                            <li>@Html.ActionLink("Carts", "Index", "Cart")</li>
+                            <li>@Html.ActionLink("Catalog", "Index", "Product")</li>
+                            @*<li>@Html.ActionLink("Contracts", "Index", "ContractProposal")</li>*@
+                            @*<li>@Html.ActionLink("Employees", "Index", "Employee")</li>*@
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </header>
+
+    <div id="body">
+        <section class="content-wrapper main-content clear-fix">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h3>@ViewBag.Message</h3>
+            </hgroup>
+            @RenderBody()
+        </section>
+    </div>
+
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <ul id="bottomMenu">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Sitemap", "", "")</li>
+                    <li>@Html.ActionLink("Privacy Policy", "", "")</li>
+                    <li>@Html.ActionLink("Terms of Use", "", "")</li>
+                </ul>
+            </div>
+            <div class="float-right">
+                <p>&copy; @DateTime.Now.Year - Wyze Software Ltd.</p>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

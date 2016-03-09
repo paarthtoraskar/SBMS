@@ -1,0 +1,44 @@
+﻿@model SBMS.Models.CustomerIssue
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>CustomerIssue</legend>
+
+        @Html.HiddenFor(model => model.CustomerIssueId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerId, "Customer Name")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CustomerId", string.Empty)
+            @Html.ValidationMessageFor(model => model.CustomerId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Issue)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Issue)
+            @Html.ValidationMessageFor(model => model.Issue)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

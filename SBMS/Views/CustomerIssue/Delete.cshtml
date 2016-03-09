@@ -1,0 +1,31 @@
+﻿@model SBMS.Models.CustomerIssue
+
+@{
+    ViewBag.Title = "Delete Confirmation";
+}
+
+<fieldset>
+    <legend>CustomerIssue</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Customer.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Customer.Username)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Issue)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Issue)
+    </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Delete" />
+        |
+		@Html.ActionLink("Back to List", "Index")
+    </p>
+}

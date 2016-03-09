@@ -1,0 +1,27 @@
+﻿@model SBMS.Models.ProjectIssue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>ProjectIssue</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Project.ProjectTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Project.ProjectTitle)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Issue)
+    </div>
+    <div class="display-field">
+        @Html.TextAreaFor(model => model.Issue)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectIssueId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

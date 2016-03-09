@@ -1,0 +1,27 @@
+﻿@model SBMS.Models.CustomerIssue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>CustomerIssue</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Customer.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Customer.Username)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Issue)
+    </div>
+    <div class="display-field">
+        @Html.TextAreaFor(model => model.Issue)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerIssueId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

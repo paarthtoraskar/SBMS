@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SBMS.Models.ContractProposal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table>
+    <tr>
+        @*        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+        @*        <th>
+            @Html.DisplayNameFor(model => model.Issues)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            @*            <td>
+                @Html.DisplayFor(modelItem => item.Issues)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ContractProposalId }) |
+				@Html.ActionLink("Details", "Details", new { id = item.ContractProposalId }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.ContractProposalId }) |
+				@if (Roles.IsUserInRole("admin"))
+    {
+        if (!item.Approved)
+        {
+                    @Html.ActionLink("Approve", "ApproveContractCreateProject", new { id = item.ContractProposalId })
+        }
+        else
+        {
+            string approved = "Approved";
+                    @approved
+        }
+    }
+            </td>
+        </tr>
+    }
+</table>

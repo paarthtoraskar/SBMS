@@ -1,0 +1,23 @@
+﻿@model SBMS.Models.Product
+
+@{
+    ViewBag.Title = "JustPushPlay";
+}
+
+<div>
+    <img src="@Url.Content("~/Content/themes/base/images/" + Model.Icon)" alt="@Model.Name" />
+    <h4>@Model.PunchLine</h4>
+    <p>@Model.Message</p>
+</div>
+
+<aside>
+    <h3>@Model.Name</h3>
+    <p>More information:</p>
+    <ul>
+        <li>@Html.ActionLink("Features", "", "")</li>
+        <li>@Html.ActionLink("FAQ", "", "")</li>
+        <li>@Html.ActionLink("Screenshots", "", "")</li>
+        <li>@Html.ActionLink("Reviews", "", "")</li>
+        <li>@Html.ActionLink("Help", "", "")</li>
+    </ul>
+</aside>

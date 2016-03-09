@@ -1,0 +1,82 @@
+﻿@model SBMS.Models.Order
+
+@{
+    ViewBag.Title = "Place order";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Order</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email, "E-mail")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CardHolderName, "Card Holder Name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CardHolderName)
+            @Html.ValidationMessageFor(model => model.CardHolderName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CardTypeId, "Card Type")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CardTypeId", new SelectList(ViewBag.CardTypeName as IEnumerable<SelectListItem>, "Value", "Text"))
+            @Html.ValidationMessageFor(model => model.CardTypeId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CardNumber, "Card Number")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CardNumber)
+            @Html.ValidationMessageFor(model => model.CardNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ExpiryDate, "Expiry Date")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ExpiryDate)
+            @Html.ValidationMessageFor(model => model.ExpiryDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SecurityCode, "Security Code")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SecurityCode)
+            @Html.ValidationMessageFor(model => model.SecurityCode)
+        </div>
+
+        <p>
+            <input type="submit" value="Place order" />
+        </p>
+    </fieldset>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

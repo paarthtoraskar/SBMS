@@ -1,0 +1,37 @@
+﻿@model IEnumerable<SBMS.Models.ProjectIssue>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Project)
+        </th>
+        @*        <th>
+            @Html.DisplayNameFor(model => model.Issue)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectTitle)
+            </td>
+            @*            <td>
+                @Html.DisplayFor(modelItem => item.Issue)
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProjectIssueId }) |
+				@Html.ActionLink("Details", "Details", new { id = item.ProjectIssueId }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.ProjectIssueId })
+            </td>
+        </tr>
+    }
+</table>

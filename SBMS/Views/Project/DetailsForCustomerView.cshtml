@@ -1,0 +1,63 @@
+﻿@model SBMS.Models.DetailsForCustomerViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<fieldset>
+    <legend>Project</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Project.ProjectTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Project.ProjectTitle)
+    </div>
+
+    <h3>Here is a list of milestones for this project!</h3>
+
+    @{int milestoneSerialNumber = 0;}
+
+    <table>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Milestones.FirstOrDefault().MilestoneId)*@
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Milestones.FirstOrDefault().Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Milestones.FirstOrDefault().StatusMessage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Milestones.FirstOrDefault().CompletionDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Milestones)
+        {
+            milestoneSerialNumber++;
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.MilestoneId)*@
+                    @milestoneSerialNumber
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusMessage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletionDate)
+                </td>
+            </tr>
+        }
+    </table>
+</fieldset>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |
+		@Html.ActionLink("Back to List", "Index")
+</p>*@

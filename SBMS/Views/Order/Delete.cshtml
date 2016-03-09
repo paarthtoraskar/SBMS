@@ -1,0 +1,73 @@
+﻿@model SBMS.Models.Order
+
+@{
+    ViewBag.Title = "Delete Confirmation";
+}
+
+<fieldset>
+    <legend>Order</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.CartId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CartId)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.UserId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserId)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Email)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.CardHolderName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CardHolderName)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.CardNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CardNumber)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.ExpiryDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExpiryDate)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.SecurityCode)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SecurityCode)
+    </div>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.TotalOrderPayment)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TotalOrderPayment)
+    </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Delete" />
+        |
+		@Html.ActionLink("Back to List", "Index")
+    </p>
+}
