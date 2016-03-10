@@ -824,6 +824,39 @@ ul#menu {
         display: inline-block;
     }
 
+.navProduct {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+    .navProduct li {
+        margin: 10px;
+        padding: 0;
+        width: 10em;
+        display: inline-block;
+    }
+
+    .navProduct h3 {
+        height: 20px;
+    }
+
+    .navProduct h4 {
+        height: 40px;
+    }
+
+    .navProduct p {
+        height: 70px;
+    }
+
+.navPortalItem {
+    margin: 10px;
+    padding: 0;
+    width: 45%;
+    display: inline-block;
+}
+
 #cart {
     font-size: 1em;
     font-weight: bold;

@@ -21,7 +21,7 @@
                     <div id="cart">
                         @Html.ActionLink("View Cart", "ViewCart", "Cart")
                         (
-						@{
+                        @{
                             List<SBMS.Models.Product> products = Session["ProductsInCart"] as List<SBMS.Models.Product>;
                             if (products != null)
                             {
@@ -50,11 +50,12 @@
                 @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp"))
                 {
                     <li>
-                        <a href="#">Employee</a>
+                        @*<a href="#">Employee</a>
                         <ul>
+                            <li>@Html.ActionLink("Employee Portal", "EmployeeLanding", "Home")</li>
                             <li>@Html.ActionLink("Support Requests", "Index", "SupportRequest")</li>
                             <li>@Html.ActionLink("Contract Proposals", "Index", "ContractProposal")</li>
-                            <li>@Html.ActionLink("Query", "Query", "ScheduleBudgetQuery")</li>
+                            <li>@Html.ActionLink("Query Contract Proposals", "Query", "ScheduleBudgetQuery")</li>
                             <li>@Html.ActionLink("Projects", "Index", "Project")</li>
                             <li>@Html.ActionLink("Project Milestones", "Index", "Milestone")</li>
                             <li>@Html.ActionLink("Project Issues", "Index", "ProjectIssue")</li>
@@ -62,7 +63,8 @@
                             <li>@Html.ActionLink("Customer Issues", "Index", "CustomerIssue")</li>
                             <li>@Html.ActionLink("Meetings And Events", "Index", "MeetingAndEvent")</li>
                             <li>@Html.ActionLink("File Handler", "StartUtility", "Product")</li>
-                        </ul>
+                        </ul>*@
+                        @Html.ActionLink("Employee Portal", "EmployeeLanding", "Home")
                     </li>
                 }
                 @if (Roles.IsUserInRole("admin"))
@@ -73,8 +75,6 @@
                             <li>@Html.ActionLink("Orders", "Index", "Order")</li>
                             <li>@Html.ActionLink("Carts", "Index", "Cart")</li>
                             <li>@Html.ActionLink("Catalog", "Index", "Product")</li>
-                            @*</li>*@
-                            @*</li>*@
                         </ul>
                     </li>
                 }

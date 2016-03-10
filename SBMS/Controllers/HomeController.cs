@@ -24,5 +24,10 @@ namespace SBMS.Controllers
 
             return View();
         }
+
+        public ActionResult EmployeeLanding()
+        {
+            return View();
+        }
     }
 }

@@ -4,43 +4,6 @@
     ViewBag.Title = "Cart";
 }
 
-<style type="text/css">
-    #nav
-    {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        text-align: center;
-    }
-
-        #nav li
-        {
-            margin: 10px;
-            padding: 0;
-            width: 10em;
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        #nav h3
-        {
-            height: 20px;
-        }
-
-        #nav h4
-        {
-            height: 40px;
-        }
-
-        #nav p
-        {
-            height: 70px;
-        }
-
-    }
-</style>
-
 @{decimal totalCartPayment = (decimal)Session["TotalCartPayment"];}
 
 @if (totalCartPayment > 0)
@@ -52,7 +15,7 @@ else
     ViewBag.Message = "Your cart is empty!";
 }
 
-<ul id="nav">
+<ul class="navProduct">
     @if (Model != null)
     {
         foreach (var item in Model)
