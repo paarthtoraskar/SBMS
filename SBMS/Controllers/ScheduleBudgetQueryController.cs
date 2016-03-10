@@ -6,7 +6,7 @@ namespace SBMS.Controllers
 {
     public class ScheduleBudgetQueryController : Controller
     {
-        private SBMSDbContext dbContext = new SBMSDbContext();
+        private readonly SBMSDbContext _dbContext = new SBMSDbContext();
 
         [HttpGet]
         public ActionResult Query()
@@ -17,14 +17,11 @@ namespace SBMS.Controllers
         [HttpPost]
         public ActionResult Result(ContractProposal contract)
         {
-            ContractProposal originalContract = (from thisContract in dbContext.Contracts
+            ContractProposal originalContract = (from thisContract in _dbContext.Contracts
                                                  where thisContract.Username == contract.Username
                                                  select thisContract).FirstOrDefault();
 
-            if (originalContract == null)
-                ViewBag.Message = "This customer does not have a contract with us!";
-            else
-                ViewBag.Message = "Here is the info.";
+            ViewBag.Message = originalContract == null ? "This customer does not have a contract with us!" : "Here is the info.";
 
             return View("~/Views/ContractProposal/Result.cshtml", originalContract);
         }

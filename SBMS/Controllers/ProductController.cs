@@ -9,20 +9,20 @@ namespace SBMS.Controllers
 {
     public class ProductController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /Product/
 
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            return View(_db.Products.ToList());
         }
 
         // GET: /Product/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Product product = db.Products.Find(id);
+            Product product = _db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -44,8 +44,8 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                db.SaveChanges();
+                _db.Products.Add(product);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -56,7 +56,7 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Product product = db.Products.Find(id);
+            Product product = _db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -71,8 +71,8 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(product).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -82,7 +82,7 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Product product = db.Products.Find(id);
+            Product product = _db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -95,15 +95,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
-            db.SaveChanges();
+            Product product = _db.Products.Find(id);
+            _db.Products.Remove(product);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 
@@ -111,13 +111,13 @@ namespace SBMS.Controllers
 
         public ActionResult Catalog()
         {
-            if (db.Products.ToList().Count == 0)
+            if (_db.Products.ToList().Count == 0)
             {
-                db.InitializeProductsOnStartup();
-                db.SaveChanges();
+                _db.InitializeProductsOnStartup();
+                _db.SaveChanges();
             }
 
-            return View(db.Products.ToList());
+            return View(_db.Products.ToList());
         }
 
         public ActionResult JustPushPlay(Product jpp)
@@ -147,29 +147,20 @@ namespace SBMS.Controllers
 
         public ActionResult StartUtility()
         {
-            string pathInAPIDomain = Server.MapPath("~");
-            var appRoot = Directory.GetParent(Directory.GetParent(pathInAPIDomain).ToString()).ToString();
-            var utilityFileName = appRoot + "\\Client\\bin\\Debug\\" + "WpfApp.exe";
+            string pathInApiDomain = Server.MapPath("~");
+            string appRoot = Directory.GetParent(Directory.GetParent(pathInApiDomain).ToString()).ToString();
+            string utilityFileName = appRoot + "\\Client\\bin\\Debug\\" + "WpfApp.exe";
 
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = utilityFileName;
+            var psi = new ProcessStartInfo { FileName = utilityFileName };
 
             if (!System.IO.File.Exists(utilityFileName))
                 //return RedirectToAction("About", "Home", null);
                 RedirectToAction("Catalog", "Product", null);
 
-            Process utility = new Process();
-            utility.StartInfo = psi;
+            var utility = new Process { StartInfo = psi };
             utility.Start();
 
             return RedirectToAction("Catalog", "Product", null);
         }
     }
-
-    //public static class HtmlExtensions
-    //{
-    //  public static void StartUtility()
-    //  {
-    //  }
-    //}
 }

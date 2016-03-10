@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using SBMS.Models;
 
@@ -7,80 +6,81 @@ namespace SBMS.Controllers
 {
     public class ProjectController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
+        private readonly DetailsForCustomerViewModel _detailsForCustViewModel = new DetailsForCustomerViewModel();
 
         // GET: /Project/
 
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            return View(_db.Projects.ToList());
         }
 
         // GET: /Project/Details/5
 
-        public ActionResult Details(int id = 0)
-        {
-            Project project = db.Projects.Find(id);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return View(project);
-        }
+        //public ActionResult Details(int id = 0)
+        //{
+        //    Project project = _db.Projects.Find(id);
+        //    if (project == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(project);
+        //}
 
         // GET: /Project/Create
 
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: /Project/Create
 
-        [HttpPost]
-        public ActionResult Create(Project project)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Projects.Add(project);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //public ActionResult Create(Project project)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Projects.Add(project);
+        //        _db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(project);
-        }
+        //    return View(project);
+        //}
 
         // GET: /Project/Edit/5
 
-        public ActionResult Edit(int id = 0)
-        {
-            Project project = db.Projects.Find(id);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return View(project);
-        }
+        //public ActionResult Edit(int id = 0)
+        //{
+        //    Project project = _db.Projects.Find(id);
+        //    if (project == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(project);
+        //}
 
         // POST: /Project/Edit/5
 
-        [HttpPost]
-        public ActionResult Edit(Project project)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(project).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(project);
-        }
+        //[HttpPost]
+        //public ActionResult Edit(Project project)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Entry(project).State = EntityState.Modified;
+        //        _db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(project);
+        //}
 
         // GET: /Project/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Project project = db.Projects.Find(id);
+            Project project = _db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -93,24 +93,22 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
-            db.SaveChanges();
+            Project project = _db.Projects.Find(id);
+            _db.Projects.Remove(project);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 
-        private DetailsForCustomerViewModel detailsForCustVM = new DetailsForCustomerViewModel();
-
         public ActionResult DetailsForCustomerView()
         {
-            detailsForCustVM.PopulateFromDbContext(db);
-            return View(detailsForCustVM);
+            _detailsForCustViewModel.PopulateFromDbContext(_db);
+            return View(_detailsForCustViewModel);
         }
     }
 }

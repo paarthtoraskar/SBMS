@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SBMS.Models
 {
     public class UserToEmpViewModel
     {
-        public UserProfile userProfileToAddToEmp { get; set; }
-        public List<UserProfile> userProfilesNotInEmp { get; set; }
+        [Required]
+        [Display(Name = "User")]
+        public string UserId { get; set; }
+        public List<UserProfile> UserProfilesNotInEmp { get; set; }
     }
 }

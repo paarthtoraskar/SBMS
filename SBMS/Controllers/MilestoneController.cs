@@ -8,13 +8,13 @@ namespace SBMS.Controllers
 {
     public class MilestoneController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /Milestone/
 
         public ActionResult Index()
         {
-            var milestones = db.Milestones.Include(m => m.Project);
+            IQueryable<Milestone> milestones = _db.Milestones.Include(m => m.Project);
             return View(milestones.ToList());
         }
 
@@ -22,12 +22,12 @@ namespace SBMS.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Milestone milestone = db.Milestones.Find(id);
-            milestone.Project = db.Projects.Find(milestone.ProjectId);
+            Milestone milestone = _db.Milestones.Find(id);
             if (milestone == null)
             {
                 return HttpNotFound();
             }
+            milestone.Project = _db.Projects.Find(milestone.ProjectId);
             return View(milestone);
         }
 
@@ -35,7 +35,7 @@ namespace SBMS.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "ProjectTitle");
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle");
             return View();
         }
 
@@ -46,12 +46,12 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Milestones.Add(milestone);
-                db.SaveChanges();
+                _db.Milestones.Add(milestone);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
             return View(milestone);
         }
 
@@ -59,12 +59,12 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Milestone milestone = db.Milestones.Find(id);
+            Milestone milestone = _db.Milestones.Find(id);
             if (milestone == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
             return View(milestone);
         }
 
@@ -75,11 +75,11 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(milestone).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(milestone).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
             return View(milestone);
         }
 
@@ -87,12 +87,12 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Milestone milestone = db.Milestones.Find(id);
-            milestone.Project = db.Projects.Find(milestone.ProjectId);
+            Milestone milestone = _db.Milestones.Find(id);
             if (milestone == null)
             {
                 return HttpNotFound();
             }
+            milestone.Project = _db.Projects.Find(milestone.ProjectId);
             return View(milestone);
         }
 
@@ -101,15 +101,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Milestone milestone = db.Milestones.Find(id);
-            db.Milestones.Remove(milestone);
-            db.SaveChanges();
+            Milestone milestone = _db.Milestones.Find(id);
+            _db.Milestones.Remove(milestone);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

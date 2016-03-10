@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SBMS.Models
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,18 +22,18 @@
                     <div id="cart">
                         @Html.ActionLink("View Cart", "ViewCart", "Cart")
                         (
-                        @{
-                            List<SBMS.Models.Product> products = Session["ProductsInCart"] as List<SBMS.Models.Product>;
-                            if (products != null)
-                            {
-                            @products.Count;
+                            @{
+                                var products = Session["ProductsInCart"] as List<Product>;
+                                if (products != null)
+                                {
+                                @products.Count
+                                }
+                                else
+                                {
+                                    const char zero = '0';
+                                @zero
+                                }
                             }
-                            else
-                            {
-                                char zero = '0';
-                            @zero;
-                            }
-                        }
                         )
                     </div>
                     <section id="login">
@@ -72,6 +73,7 @@
                     <li>
                         <a href="#">Admin</a>
                         <ul>
+                            <li>@Html.ActionLink("Give Employee Role", "UserToEmp", "UserToEmp")</li>
                             <li>@Html.ActionLink("Orders", "Index", "Order")</li>
                             <li>@Html.ActionLink("Carts", "Index", "Cart")</li>
                             <li>@Html.ActionLink("Catalog", "Index", "Product")</li>
@@ -98,9 +100,9 @@
                 <ul id="bottomMenu">
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Sitemap", "", "")</li>
-                    <li>@Html.ActionLink("Privacy Policy", "", "")</li>
-                    <li>@Html.ActionLink("Terms of Use", "", "")</li>
+                    <li>@Html.ActionLink("Sitemap", string.Empty, string.Empty)</li>
+                    <li>@Html.ActionLink("Privacy Policy", string.Empty, string.Empty)</li>
+                    <li>@Html.ActionLink("Terms of Use", string.Empty, string.Empty)</li>
                 </ul>
             </div>
             <div class="float-right">
@@ -110,6 +112,6 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 </body>
 </html>

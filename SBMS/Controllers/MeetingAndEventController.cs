@@ -7,20 +7,20 @@ namespace SBMS.Controllers
 {
     public class MeetingAndEventController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /MeetingAndEvent/
 
         public ActionResult Index()
         {
-            return View(db.MeetingAndEvents.ToList());
+            return View(_db.MeetingAndEvents.ToList());
         }
 
         // GET: /MeetingAndEvent/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            MeetingAndEvent meetingandevent = db.MeetingAndEvents.Find(id);
+            MeetingAndEvent meetingandevent = _db.MeetingAndEvents.Find(id);
             if (meetingandevent == null)
             {
                 return HttpNotFound();
@@ -42,8 +42,8 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MeetingAndEvents.Add(meetingandevent);
-                db.SaveChanges();
+                _db.MeetingAndEvents.Add(meetingandevent);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -54,7 +54,7 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            MeetingAndEvent meetingandevent = db.MeetingAndEvents.Find(id);
+            MeetingAndEvent meetingandevent = _db.MeetingAndEvents.Find(id);
             if (meetingandevent == null)
             {
                 return HttpNotFound();
@@ -69,8 +69,8 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(meetingandevent).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(meetingandevent).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(meetingandevent);
@@ -80,7 +80,7 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            MeetingAndEvent meetingandevent = db.MeetingAndEvents.Find(id);
+            MeetingAndEvent meetingandevent = _db.MeetingAndEvents.Find(id);
             if (meetingandevent == null)
             {
                 return HttpNotFound();
@@ -93,15 +93,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            MeetingAndEvent meetingandevent = db.MeetingAndEvents.Find(id);
-            db.MeetingAndEvents.Remove(meetingandevent);
-            db.SaveChanges();
+            MeetingAndEvent meetingandevent = _db.MeetingAndEvents.Find(id);
+            _db.MeetingAndEvents.Remove(meetingandevent);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using SBMS.Models;
@@ -10,20 +11,20 @@ namespace SBMS.Controllers
 {
     public class OrderController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /Order/
 
         public ActionResult Index()
         {
-            return View(db.Orders.ToList());
+            return View(_db.Orders.ToList());
         }
 
         // GET: /Order/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Order order = db.Orders.Find(id);
+            Order order = _db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -47,18 +48,18 @@ namespace SBMS.Controllers
         }
 
         // returns a SelectList for populating the Card Type combobox
-        private IList<SelectListItem> CardTypeEnumList()
+        private IEnumerable<SelectListItem> CardTypeEnumList()
         {
-            string[] names = Enum.GetNames(typeof(SBMS.Models.Order.CardType));
-            Array values = Enum.GetValues(typeof(SBMS.Models.Order.CardType));
+            string[] names = Enum.GetNames(typeof(Order.CardType));
+            Array values = Enum.GetValues(typeof(Order.CardType));
             IList<SelectListItem> items = new List<SelectListItem>();
             for (int i = 0; i < names.Length; i++)
             {
-                int val = (int)values.GetValue(i);
+                var val = (int)values.GetValue(i);
                 items.Add(new SelectListItem
                 {
                     Text = names[i],
-                    Value = val.ToString()
+                    Value = val.ToString(CultureInfo.InvariantCulture)
                 });
             }
             return items;
@@ -78,8 +79,8 @@ namespace SBMS.Controllers
                 order.Username = WebSecurity.CurrentUserName;
                 order.TotalOrderPayment = (decimal)Session["TotalCartPayment"];
 
-                db.Orders.Add(order);
-                db.SaveChanges();
+                _db.Orders.Add(order);
+                _db.SaveChanges();
                 return RedirectToAction("OrderPlaced");
             }
 
@@ -90,24 +91,22 @@ namespace SBMS.Controllers
         {
             string cartId = Session["CartId"].ToString();
 
-            List<Product> productsInCart = new List<Product>();
-            productsInCart = Session["ProductsInCart"] as List<Product>;
+            var productsInCart = Session["ProductsInCart"] as List<Product>;
 
-            foreach (var product in productsInCart)
-            {
-                Cart newCart = new Cart();
-                newCart.CartId = cartId;
-                newCart.ProductId = product.ProductId;
-                db.Carts.Add(newCart);
-                db.SaveChanges();
-            }
+            if (productsInCart != null)
+                foreach (Product product in productsInCart)
+                {
+                    var newCart = new Cart { CartId = cartId, ProductId = product.ProductId };
+                    _db.Carts.Add(newCart);
+                    _db.SaveChanges();
+                }
         }
 
         // GET: /Order/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            Order order = db.Orders.Find(id);
+            Order order = _db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -122,8 +121,8 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(order).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(order);
@@ -133,7 +132,7 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Order order = db.Orders.Find(id);
+            Order order = _db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -146,15 +145,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
+            Order order = _db.Orders.Find(id);
+            _db.Orders.Remove(order);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 

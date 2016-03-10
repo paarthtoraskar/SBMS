@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using System.Web.Security;
 using SBMS.Models;
@@ -7,36 +9,42 @@ namespace SBMS.Controllers
 {
     public class UserToEmpController : Controller
     {
-        private UsersContext usersContext = new UsersContext();
+        private readonly UsersContext _usersContext = new UsersContext();
+        private readonly UserToEmpViewModel _userToEmpViewModel = new UserToEmpViewModel();
 
-        private UserToEmpViewModel userToEmpViewModel = new UserToEmpViewModel();
+        public UserToEmpController()
+        {
+            _userToEmpViewModel.UserProfilesNotInEmp = new List<UserProfile>();
+        }
 
-        public void FindUserProfilesNotInEmp()
+        public ActionResult UserToEmp(string result = "")
+        {
+            FindUserProfilesNotInEmp();
+            ViewBag.Message = result;
+            return View("UserToEmp", _userToEmpViewModel);
+        }
+
+        private void FindUserProfilesNotInEmp()
         {
             //userProfilesNotInEmp = (from userProfile in usersContext.UserProfiles where !Roles.IsUserInRole(userProfile.Username, "emp") select userProfile).ToList();
-
-            userToEmpViewModel.userProfileToAddToEmp = new UserProfile();
-            userToEmpViewModel.userProfilesNotInEmp = new List<UserProfile>();
-
-            foreach (var userProfile in usersContext.UserProfiles)
+            foreach (var userProfile in _usersContext.UserProfiles)
             {
                 if (!Roles.IsUserInRole(userProfile.Username, "emp") && !Roles.IsUserInRole(userProfile.Username, "admin"))
-                    userToEmpViewModel.userProfilesNotInEmp.Add(userProfile);
+                    _userToEmpViewModel.UserProfilesNotInEmp.Add(userProfile);
             }
         }
 
-        [HttpGet]
-        public ActionResult ShowUserToEmp()
-        {
-            FindUserProfilesNotInEmp();
-
-            return View("UserToEmp", userToEmpViewModel);
-        }
-
         [HttpPost]
-        public ActionResult GiveUserEmployeeRole(UserToEmpViewModel editedVM)
+        public ActionResult GiveUserEmployeeRole(int userId)
         {
-            return View();
+            var userProfile = _usersContext.UserProfiles.Find(userId);
+            if (userProfile != null)
+            {
+                Roles.AddUserToRole(userProfile.Username, "emp");
+                Roles.RemoveUserFromRole(userProfile.Username, "public");
+                return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Success!" });
+            }
+            return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Failure! Try again later!" });
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SBMS.Models;
 
@@ -10,13 +9,13 @@ namespace SBMS.Controllers
 {
     public class CartController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /Cart/
 
         public ActionResult Index()
         {
-            var carts = db.Carts.Include(c => c.Product);
+            IQueryable<Cart> carts = _db.Carts.Include(c => c.Product);
             return View(carts.ToList());
         }
 
@@ -24,12 +23,12 @@ namespace SBMS.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Cart cart = db.Carts.Find(id);
+            Cart cart = _db.Carts.Find(id);
             if (cart == null)
             {
                 return HttpNotFound();
             }
-            cart.Product = db.Products.Find(cart.ProductId);
+            cart.Product = _db.Products.Find(cart.ProductId);
             return View(cart);
         }
 
@@ -37,7 +36,7 @@ namespace SBMS.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name");
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name");
             return View();
         }
 
@@ -48,12 +47,12 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Carts.Add(cart);
-                db.SaveChanges();
+                _db.Carts.Add(cart);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", cart.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", cart.ProductId);
             return View(cart);
         }
 
@@ -61,12 +60,12 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Cart cart = db.Carts.Find(id);
+            Cart cart = _db.Carts.Find(id);
             if (cart == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", cart.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", cart.ProductId);
             return View(cart);
         }
 
@@ -77,11 +76,11 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cart).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(cart).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", cart.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", cart.ProductId);
             return View(cart);
         }
 
@@ -89,7 +88,7 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Cart cart = db.Carts.Find(id);
+            Cart cart = _db.Carts.Find(id);
             if (cart == null)
             {
                 return HttpNotFound();
@@ -102,55 +101,55 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cart cart = db.Carts.Find(id);
-            db.Carts.Remove(cart);
-            db.SaveChanges();
+            Cart cart = _db.Carts.Find(id);
+            _db.Carts.Remove(cart);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 
         public ActionResult AddToCart(int id = 0)
         {
-            Product productFound = db.Products.Find(id);
+            Product productFound = _db.Products.Find(id);
             if (productFound == null)
             {
                 return HttpNotFound();
             }
-            List<Product> products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             if (products.Find(productToBeAdded => productToBeAdded.ProductId == productFound.ProductId) == null)
                 products.Add(productFound);
             else
-                return View("~/Views/Product/Catalog.cshtml", db.Products.ToList());
+                return View("~/Views/Product/Catalog.cshtml", _db.Products.ToList());
 
-            decimal totalCartPayment = (decimal)Session["TotalCartPayment"];
+            var totalCartPayment = (decimal)Session["TotalCartPayment"];
             totalCartPayment += productFound.Price;
             Session["TotalCartPayment"] = totalCartPayment;
 
-            return View("~/Views/Product/Catalog.cshtml", db.Products.ToList());
+            return View("~/Views/Product/Catalog.cshtml", _db.Products.ToList());
         }
 
         public ActionResult ViewCart()
         {
-            List<Product> products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             return View("~/Views/Cart/CartView.cshtml", products);
         }
 
         public ActionResult RemoveFromCart(int id = 0)
         {
-            Product productFound = db.Products.Find(id);
+            Product productFound = _db.Products.Find(id);
             if (productFound == null)
             {
                 return HttpNotFound();
             }
-            List<Product> products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             products.RemoveAll(productToBeRemoved => productToBeRemoved.ProductId == productFound.ProductId);
 
-            decimal totalCartPayment = (decimal)Session["TotalCartPayment"];
+            var totalCartPayment = (decimal)Session["TotalCartPayment"];
             totalCartPayment -= productFound.Price;
             Session["TotalCartPayment"] = totalCartPayment;
 

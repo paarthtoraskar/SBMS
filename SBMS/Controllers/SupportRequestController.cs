@@ -8,98 +8,98 @@ namespace SBMS.Controllers
 {
     public class SupportRequestController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /SupportRequest/
 
         public ActionResult Index()
         {
-            var supportrequests = db.SupportRequests.Include(s => s.Product);
-            return View(supportrequests.ToList());
+            IQueryable<SupportRequest> supportRequests = _db.SupportRequests.Include(s => s.Product);
+            return View(supportRequests.ToList());
         }
 
         // GET: /SupportRequest/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            SupportRequest supportrequest = db.SupportRequests.Find(id);
-            supportrequest.Product = db.Products.Find(supportrequest.ProductId);
-            if (supportrequest == null)
+            SupportRequest supportRequest = _db.SupportRequests.Find(id);
+            if (supportRequest == null)
             {
                 return HttpNotFound();
             }
-            return View(supportrequest);
+            supportRequest.Product = _db.Products.Find(supportRequest.ProductId);
+            return View(supportRequest);
         }
 
         // GET: /SupportRequest/Create
 
         public ActionResult Create()
         {
-            if (db.Products.ToList().Count == 0)
+            if (_db.Products.ToList().Count == 0)
             {
-                db.InitializeProductsOnStartup();
-                db.SaveChanges();
+                _db.InitializeProductsOnStartup();
+                _db.SaveChanges();
             }
 
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name");
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name");
             return View();
         }
 
         // POST: /SupportRequest/Create
 
         [HttpPost]
-        public ActionResult Create(SupportRequest supportrequest)
+        public ActionResult Create(SupportRequest supportRequest)
         {
             if (ModelState.IsValid)
             {
-                db.SupportRequests.Add(supportrequest);
-                db.SaveChanges();
+                _db.SupportRequests.Add(supportRequest);
+                _db.SaveChanges();
                 return RedirectToAction("SupportFormSubmitted");
             }
 
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", supportrequest.ProductId);
-            return View(supportrequest);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            return View(supportRequest);
         }
 
         // GET: /SupportRequest/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            SupportRequest supportrequest = db.SupportRequests.Find(id);
-            if (supportrequest == null)
+            SupportRequest supportRequest = _db.SupportRequests.Find(id);
+            if (supportRequest == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", supportrequest.ProductId);
-            return View(supportrequest);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            return View(supportRequest);
         }
 
         // POST: /SupportRequest/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(SupportRequest supportrequest)
+        public ActionResult Edit(SupportRequest supportRequest)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(supportrequest).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(supportRequest).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductId = new SelectList(db.Products, "ProductId", "Name", supportrequest.ProductId);
-            return View(supportrequest);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            return View(supportRequest);
         }
 
         // GET: /SupportRequest/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            SupportRequest supportrequest = db.SupportRequests.Find(id);
-            supportrequest.Product = db.Products.Find(supportrequest.ProductId);
-            if (supportrequest == null)
+            SupportRequest supportRequest = _db.SupportRequests.Find(id);
+            if (supportRequest == null)
             {
                 return HttpNotFound();
             }
-            return View(supportrequest);
+            supportRequest.Product = _db.Products.Find(supportRequest.ProductId);
+            return View(supportRequest);
         }
 
         // POST: /SupportRequest/Delete/5
@@ -107,15 +107,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            SupportRequest supportrequest = db.SupportRequests.Find(id);
-            db.SupportRequests.Remove(supportrequest);
-            db.SaveChanges();
+            SupportRequest supportRequest = _db.SupportRequests.Find(id);
+            _db.SupportRequests.Remove(supportRequest);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 

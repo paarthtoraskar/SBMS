@@ -8,13 +8,13 @@ namespace SBMS.Controllers
 {
     public class CustomerIssueController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /CustomerIssue/
 
         public ActionResult Index()
         {
-            var customerIssues = db.CustomerIssues.Include(c => c.Customer);
+            IQueryable<CustomerIssue> customerIssues = _db.CustomerIssues.Include(c => c.Customer);
             return View(customerIssues.ToList());
         }
 
@@ -22,12 +22,12 @@ namespace SBMS.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            CustomerIssue customerIssue = db.CustomerIssues.Find(id);
-            customerIssue.Customer = db.Customers.Find(customerIssue.CustomerId);
+            CustomerIssue customerIssue = _db.CustomerIssues.Find(id);
             if (customerIssue == null)
             {
                 return HttpNotFound();
             }
+            customerIssue.Customer = _db.Customers.Find(customerIssue.CustomerId);
             return View(customerIssue);
         }
 
@@ -35,7 +35,7 @@ namespace SBMS.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Username");
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username");
             return View();
         }
 
@@ -46,12 +46,12 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CustomerIssues.Add(customerIssue);
-                db.SaveChanges();
+                _db.CustomerIssues.Add(customerIssue);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
             return View(customerIssue);
         }
 
@@ -59,12 +59,12 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            CustomerIssue customerIssue = db.CustomerIssues.Find(id);
+            CustomerIssue customerIssue = _db.CustomerIssues.Find(id);
             if (customerIssue == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
             return View(customerIssue);
         }
 
@@ -75,11 +75,11 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customerIssue).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(customerIssue).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
             return View(customerIssue);
         }
 
@@ -87,12 +87,12 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            CustomerIssue customerIssue = db.CustomerIssues.Find(id);
-            customerIssue.Customer = db.Customers.Find(customerIssue.CustomerId);
+            CustomerIssue customerIssue = _db.CustomerIssues.Find(id);
             if (customerIssue == null)
             {
                 return HttpNotFound();
             }
+            customerIssue.Customer = _db.Customers.Find(customerIssue.CustomerId);
             return View(customerIssue);
         }
 
@@ -101,15 +101,15 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            CustomerIssue customerIssue = db.CustomerIssues.Find(id);
-            db.CustomerIssues.Remove(customerIssue);
-            db.SaveChanges();
+            CustomerIssue customerIssue = _db.CustomerIssues.Find(id);
+            _db.CustomerIssues.Remove(customerIssue);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

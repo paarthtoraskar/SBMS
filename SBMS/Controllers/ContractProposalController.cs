@@ -9,37 +9,24 @@ namespace SBMS.Controllers
 {
     public class ContractProposalController : Controller
     {
-        private SBMSDbContext db = new SBMSDbContext();
+        private readonly SBMSDbContext _db = new SBMSDbContext();
 
         // GET: /ContractProposal/
 
         public ActionResult Index()
         {
-            return View(db.Contracts.ToList());
+            return View(_db.Contracts.ToList());
         }
 
         // GET: /ContractProposal/Details/5
 
-        //public ActionResult Details(int id = 0)
-        //{
-        //  ContractProposal contract = db.Contracts.Find(id);
-        //  if (contract == null)
-        //  {
-        //    return HttpNotFound();
-        //  }
-        //  return View(contract);
-        //}
-
-        public ActionResult Details(int id = 0, string headerMessage = "")
+        public ActionResult Details(int id = 0)
         {
-            ContractProposal contract = db.Contracts.Find(id);
+            ContractProposal contract = _db.Contracts.Find(id);
             if (contract == null)
             {
                 return HttpNotFound();
             }
-            if (headerMessage != string.Empty)
-                ViewBag.HeaderMessage = headerMessage;
-
             return View(contract);
         }
 
@@ -76,11 +63,12 @@ namespace SBMS.Controllers
                 contract.UserId = WebSecurity.CurrentUserId;
                 contract.Username = WebSecurity.CurrentUserName;
 
-                db.Contracts.Add(contract);
-                db.SaveChanges();
+                _db.Contracts.Add(contract);
+                _db.SaveChanges();
                 //return RedirectToAction("Index");
 
-                return RedirectToAction("Details", "ContractProposal", new { id = contract.ContractProposalId, headerMessage = "Created now!" });
+                return RedirectToAction("Details", "ContractProposal",
+                    new { id = contract.ContractProposalId, headerMessage = "Created now!" });
             }
 
             return View(contract);
@@ -90,7 +78,7 @@ namespace SBMS.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            ContractProposal contract = db.Contracts.Find(id);
+            ContractProposal contract = _db.Contracts.Find(id);
             if (contract == null)
             {
                 return HttpNotFound();
@@ -106,9 +94,9 @@ namespace SBMS.Controllers
         [HttpPost]
         public ActionResult Edit(ContractProposal contract)
         {
-            ContractProposal originalContract = Session["OriginalContract"] as ContractProposal;
+            var originalContract = Session["OriginalContract"] as ContractProposal;
 
-            if (!originalContract.Approved)
+            if (originalContract != null && !originalContract.Approved)
             {
                 if (contract.StartDate < DateTime.Today)
                 {
@@ -127,14 +115,17 @@ namespace SBMS.Controllers
                 }
             }
 
-            contract.UserId = originalContract.UserId;
-            contract.Username = originalContract.Username;
+            if (originalContract != null)
+            {
+                contract.UserId = originalContract.UserId;
+                contract.Username = originalContract.Username;
 
-            if (originalContract.Approved)
-                LoadUneditableValues(originalContract, contract);
+                if (originalContract.Approved)
+                    LoadUneditableValues(originalContract, contract);
+            }
 
-            db.Entry(contract).State = EntityState.Modified;
-            db.SaveChanges();
+            _db.Entry(contract).State = EntityState.Modified;
+            _db.SaveChanges();
             //return RedirectToAction("Index");
             return RedirectToAction("Details", "ContractProposal", new { id = contract.ContractProposalId });
         }
@@ -153,7 +144,7 @@ namespace SBMS.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            ContractProposal contract = db.Contracts.Find(id);
+            ContractProposal contract = _db.Contracts.Find(id);
             if (contract == null)
             {
                 return HttpNotFound();
@@ -166,34 +157,33 @@ namespace SBMS.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            ContractProposal contract = db.Contracts.Find(id);
-            db.Contracts.Remove(contract);
-            db.SaveChanges();
+            ContractProposal contract = _db.Contracts.Find(id);
+            _db.Contracts.Remove(contract);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
 
         public RedirectToRouteResult SelectViewBasedOnContractStatus()
         {
-            ContractProposal thisUsersContract;
-            thisUsersContract = (from contract in db.Contracts
-                                 where
-                                   (contract.UserId == WebSecurity.CurrentUserId)
-                                 select contract).FirstOrDefault();
+            ContractProposal thisUsersContract = (from contract in _db.Contracts
+                                                  where
+                                                      (contract.UserId == WebSecurity.CurrentUserId)
+                                                  select contract).FirstOrDefault();
 
             if (thisUsersContract == null)
                 return RedirectToAction("WelcomeContractView", "ContractProposal");
-            else if (thisUsersContract != null && !thisUsersContract.Approved)
+            if (!thisUsersContract.Approved)
                 return RedirectToAction("Details", "ContractProposal", new { id = thisUsersContract.ContractProposalId });
-            else if (thisUsersContract != null && thisUsersContract.Approved)
-                return RedirectToAction("ContractOrProjectView", "ContractProposal", new { id = thisUsersContract.ContractProposalId });
-            else
-                return RedirectToAction("HttpNotFoundView", "ContractProposal");
+            if (thisUsersContract.Approved)
+                return RedirectToAction("ContractOrProjectView", "ContractProposal",
+                    new { id = thisUsersContract.ContractProposalId });
+            return RedirectToAction("HttpNotFoundView", "ContractProposal");
         }
 
         public ActionResult WelcomeContractView()
@@ -203,7 +193,7 @@ namespace SBMS.Controllers
 
         public ActionResult ContractOrProjectView(int id = 0, string headerMessage = "")
         {
-            ContractProposal contract = db.Contracts.Find(id);
+            ContractProposal contract = _db.Contracts.Find(id);
             if (contract == null)
             {
                 return HttpNotFound();
@@ -219,7 +209,7 @@ namespace SBMS.Controllers
 
         public ActionResult ApproveContractCreateProject(int id = 0)
         {
-            ContractProposal contract = db.Contracts.Find(id);
+            ContractProposal contract = _db.Contracts.Find(id);
             if (contract == null)
                 return HttpNotFound();
 
@@ -227,25 +217,25 @@ namespace SBMS.Controllers
             contract.Approved = true;
 
             // create new Customer
-            Customer newCustomer = new Customer();
+            var newCustomer = new Customer();
             // get all properties for this Customer except ProjectId
             newCustomer.ExtractRelevantData(contract);
-            db.Customers.Add(newCustomer);
-            db.SaveChanges();
+            _db.Customers.Add(newCustomer);
+            _db.SaveChanges();
 
             // create new project
-            Project newProject = new Project();
+            var newProject = new Project();
             // get all properties for this project
             newProject.ExtractRelevantData(newCustomer);
-            db.Projects.Add(newProject);
-            db.SaveChanges();
+            _db.Projects.Add(newProject);
+            _db.SaveChanges();
 
             // get ProjectId for this Customer
             newCustomer.ExtractRelevantData(newProject);
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
-            return View("Index", db.Contracts.ToList());
+            return View("Index", _db.Contracts.ToList());
         }
     }
 }

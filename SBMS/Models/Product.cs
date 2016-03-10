@@ -13,6 +13,8 @@ namespace SBMS.Models
         public string Icon { get; set; }
         public string PunchLine { get; set; }
         public string Message { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
     }
 }
