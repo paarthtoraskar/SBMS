@@ -11,8 +11,11 @@ namespace SBMS.Models
         public string ProjectTitle { get; set; }
 
         public int UserId { get; set; }
+
         public string Username { get; set; }
+
         public int ContractProposalId { get; set; }
+
         public int CustomerId { get; set; }
 
         public void ExtractRelevantData(Customer givenCustomer)

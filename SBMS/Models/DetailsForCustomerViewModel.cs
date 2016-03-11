@@ -7,6 +7,7 @@ namespace SBMS.Models
     public class DetailsForCustomerViewModel
     {
         public Project Project { get; set; }
+
         public List<Milestone> Milestones { get; set; }
 
         public void PopulateFromDbContext(SBMSDbContext dbContext)

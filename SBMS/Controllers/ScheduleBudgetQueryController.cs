@@ -21,7 +21,7 @@ namespace SBMS.Controllers
                                                  where thisContract.Username == contract.Username
                                                  select thisContract).FirstOrDefault();
 
-            ViewBag.Message = originalContract == null ? "This customer does not have a contract with us!" : "Here is the info.";
+            ViewBag.Message = originalContract == null ? "This customer does not have a contract with us!" : string.Empty;
 
             return View("~/Views/ContractProposal/Result.cshtml", originalContract);
         }

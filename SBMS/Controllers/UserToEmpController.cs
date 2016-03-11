@@ -12,39 +12,41 @@ namespace SBMS.Controllers
         private readonly UsersContext _usersContext = new UsersContext();
         private readonly UserToEmpViewModel _userToEmpViewModel = new UserToEmpViewModel();
 
-        public UserToEmpController()
-        {
-            _userToEmpViewModel.UserProfilesNotInEmp = new List<UserProfile>();
-        }
-
         public ActionResult UserToEmp(string result = "")
         {
-            FindUserProfilesNotInEmp();
+            _userToEmpViewModel.UserProfilesNotInEmp = FindUserProfilesNotInEmp();
             ViewBag.Message = result;
             return View("UserToEmp", _userToEmpViewModel);
         }
 
-        private void FindUserProfilesNotInEmp()
+        private SelectList FindUserProfilesNotInEmp()
         {
-            //userProfilesNotInEmp = (from userProfile in usersContext.UserProfiles where !Roles.IsUserInRole(userProfile.Username, "emp") select userProfile).ToList();
+            var tempUserProfiles = new List<UserProfile>();
             foreach (var userProfile in _usersContext.UserProfiles)
             {
                 if (!Roles.IsUserInRole(userProfile.Username, "emp") && !Roles.IsUserInRole(userProfile.Username, "admin"))
-                    _userToEmpViewModel.UserProfilesNotInEmp.Add(userProfile);
+                    tempUserProfiles.Add(userProfile);
             }
+            return new SelectList(tempUserProfiles, "UserId", "Username");
         }
 
         [HttpPost]
-        public ActionResult GiveUserEmployeeRole(int userId)
+        public ActionResult GiveUserEmployeeRole(UserToEmpViewModel userToEmpViewModel)
         {
-            var userProfile = _usersContext.UserProfiles.Find(userId);
-            if (userProfile != null)
+            if (ModelState.IsValid)
             {
-                Roles.AddUserToRole(userProfile.Username, "emp");
-                Roles.RemoveUserFromRole(userProfile.Username, "public");
-                return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Success!" });
+                var userProfile = _usersContext.UserProfiles.Find(userToEmpViewModel.UserId);
+                if (userProfile != null)
+                {
+                    Roles.AddUserToRole(userProfile.Username, "emp");
+                    Roles.RemoveUserFromRole(userProfile.Username, "public");
+                    return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Success!" });
+                }
+                return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Failure!" });
             }
-            return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Failure! Try again later!" });
+            //return RedirectToAction("UserToEmp", "UserToEmp", new { result = "!ModelState.IsValid" });
+            userToEmpViewModel.UserProfilesNotInEmp = FindUserProfilesNotInEmp();
+            return View("UserToEmp", userToEmpViewModel);
         }
     }
 }

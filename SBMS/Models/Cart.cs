@@ -8,7 +8,9 @@ namespace SBMS.Models
         public int RecordId { get; set; }
 
         public string CartId { get; set; }
+
         public int ProductId { get; set; }
+
         public Product Product { get; set; }
     }
 }

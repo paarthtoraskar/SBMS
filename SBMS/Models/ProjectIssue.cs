@@ -8,6 +8,7 @@ namespace SBMS.Models
         public int ProjectIssueId { get; set; }
 
         public int ProjectId { get; set; }
+
         public Project Project { get; set; }
 
         [Required]

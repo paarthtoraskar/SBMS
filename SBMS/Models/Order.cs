@@ -50,6 +50,7 @@ namespace SBMS.Models
         [Required]
         public int SecurityCode { get; set; }
 
+        [Display(Name = "Total Order Payment")]
         public decimal TotalOrderPayment { get; set; }
 
         public enum CardType

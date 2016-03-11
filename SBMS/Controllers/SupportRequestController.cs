@@ -57,7 +57,7 @@ namespace SBMS.Controllers
                 return RedirectToAction("SupportFormSubmitted");
             }
 
-            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name");
             return View(supportRequest);
         }
 
@@ -70,7 +70,7 @@ namespace SBMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name");
             return View(supportRequest);
         }
 
@@ -85,7 +85,7 @@ namespace SBMS.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name", supportRequest.ProductId);
+            ViewBag.ProductId = new SelectList(_db.Products, "ProductId", "Name");
             return View(supportRequest);
         }
 

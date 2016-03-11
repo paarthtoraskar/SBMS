@@ -51,7 +51,7 @@ namespace SBMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle");
             return View(milestone);
         }
 
@@ -64,7 +64,7 @@ namespace SBMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle");
             return View(milestone);
         }
 
@@ -79,7 +79,7 @@ namespace SBMS.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle", milestone.ProjectId);
+            ViewBag.ProjectId = new SelectList(_db.Projects, "ProjectId", "ProjectTitle");
             return View(milestone);
         }
 

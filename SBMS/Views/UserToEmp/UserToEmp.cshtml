@@ -9,7 +9,7 @@ Select a user from the drop down list and give him the role of an employee
 @using (Html.BeginForm("GiveUserEmployeeRole", "UserToEmp", FormMethod.Post))
 {
     <div class="editor-field">
-        @Html.DropDownListFor(model => model.UserId, new SelectList(Model.UserProfilesNotInEmp, "UserId", "Username"), string.Empty)
+        @Html.DropDownListFor(model => model.UserId, Model.UserProfilesNotInEmp, string.Empty)
         @Html.ValidationMessageFor(model => model.UserId)
         <br />
         <input type="submit" value="Give Role" />

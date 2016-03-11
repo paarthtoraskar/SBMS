@@ -51,7 +51,7 @@ namespace SBMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username");
             return View(customerIssue);
         }
 
@@ -64,7 +64,7 @@ namespace SBMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username");
             return View(customerIssue);
         }
 
@@ -79,7 +79,7 @@ namespace SBMS.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username", customerIssue.CustomerId);
+            ViewBag.CustomerId = new SelectList(_db.Customers, "CustomerId", "Username");
             return View(customerIssue);
         }
 
