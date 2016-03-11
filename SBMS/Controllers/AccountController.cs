@@ -43,20 +43,26 @@ namespace SBMS.Controllers
 
         // POST: /Account/LogOff
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult LogOff()
+        //{
+        //    ////Session.RemoveAll();
+
+        //    //Session["TotalCartPayment"] = 0.0;
+        //    ////List<Product> products = Session["ProductsInCart"] as List<Product>;
+        //    ////products.Clear();
+        //    ////Session["ProductsInCart"] = products;
+        //    //(Session["ProductsInCart"] as List<Product>).Clear();
+
+        //    WebSecurity.Logout();
+        //    return RedirectToAction("Catalog", "Product");
+        //}
+
         public ActionResult LogOff()
         {
-            ////Session.RemoveAll();
-
-            //Session["TotalCartPayment"] = 0.0;
-            ////List<Product> products = Session["ProductsInCart"] as List<Product>;
-            ////products.Clear();
-            ////Session["ProductsInCart"] = products;
-            //(Session["ProductsInCart"] as List<Product>).Clear();
-
             WebSecurity.Logout();
-            return RedirectToAction("Catalog", "Product");
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: /Account/Register
