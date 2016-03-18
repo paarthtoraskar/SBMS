@@ -15,7 +15,7 @@
             <ol>
                 <li>
                     @Html.LabelFor(m => m.Username)
-                    @Html.TextBoxFor(m => m.Username)
+                    @Html.TextBoxFor(m => m.Username, new { autofocus = "autofocus" })
                     @Html.ValidationMessageFor(m => m.Username)
                 </li>
                 <li>
