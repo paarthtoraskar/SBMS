@@ -65,21 +65,21 @@
                 @Html.DisplayFor(modelItem => item.Issues)
             </td>*@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ContractProposalId }) |
-				@Html.ActionLink("Details", "Details", new { id = item.ContractProposalId }) |
-				@Html.ActionLink("Delete", "Delete", new { id = item.ContractProposalId }) |
-				@if (Roles.IsUserInRole("admin"))
-    {
-        if (!item.Approved)
-        {
-                    @Html.ActionLink("Approve", "ApproveContractCreateProject", new { id = item.ContractProposalId })
-        }
-        else
-        {
-            string approved = "Approved";
-                    @approved
-        }
-    }
+                @Html.ActionLink("Edit", "Edit", new {id = item.ContractProposalId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.ContractProposalId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.ContractProposalId}) |
+                @if (Roles.IsUserInRole("admin"))
+                {
+                    if (!item.Approved)
+                    {
+                        @Html.ActionLink("Approve", "ApproveContractCreateProject", new {id = item.ContractProposalId})
+                    }
+                    else
+                    {
+                        string approved = "Approved";
+                        @approved
+                    }
+                }
             </td>
         </tr>
     }

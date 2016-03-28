@@ -30,7 +30,9 @@ namespace SBMS.Models
         //}
 
         public SBMSDbContext()
-            : base("name=SBMSDbContext") { }
+            : base("name=SBMSDbContext")
+        {
+        }
 
         public void InitializeProductsOnStartup()
         {
@@ -47,7 +49,8 @@ namespace SBMS.Models
             try
             {
                 XDocument doc = XDocument.Load(path);
-                IEnumerable<XElement> product = from prod in doc.Elements("ProductCatalog").Elements("Product") select prod;
+                IEnumerable<XElement> product = from prod in doc.Elements("ProductCatalog").Elements("Product")
+                    select prod;
                 foreach (XElement elem in product)
                 {
                     var newProduct = new Product();
@@ -59,7 +62,10 @@ namespace SBMS.Models
                     products.Add(newProduct);
                 }
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
             return true;
         }
 

@@ -20,7 +20,8 @@ namespace SBMS
         {
             if (!WebSecurity.Initialized)
             {
-                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", autoCreateTables: true);
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username",
+                    autoCreateTables: true);
             }
 
             Database.SetInitializer(new UsersContextDbInitializer());
@@ -72,7 +73,8 @@ namespace SBMS
         {
             if (!WebSecurity.Initialized)
             {
-                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", autoCreateTables: true);
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username",
+                    autoCreateTables: true);
             }
 
             if (!Roles.RoleExists("admin"))
@@ -85,7 +87,7 @@ namespace SBMS
             }
             if (!Roles.GetRolesForUser("admin").Contains("admin"))
             {
-                Roles.AddUsersToRoles(new[] { "admin" }, new[] { "admin" });
+                Roles.AddUsersToRoles(new[] {"admin"}, new[] {"admin"});
             }
             base.Seed(userContext);
         }

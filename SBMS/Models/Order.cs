@@ -19,7 +19,8 @@ namespace SBMS.Models
         [Required]
         public string Email { get; set; }
 
-        [RegularExpression(@"\d{3}-?\d{3}-?\d{4}", ErrorMessage = "Invalid {0}. Please enter 10 digits without spaces or hyphens.")]
+        [RegularExpression(@"\d{3}-?\d{3}-?\d{4}",
+            ErrorMessage = "Invalid {0}. Please enter 10 digits without spaces or hyphens.")]
         [DataType(DataType.PhoneNumber)]
         [DisplayFormat(DataFormatString = "{0:###-###-####}")]
         [Required]
@@ -32,7 +33,8 @@ namespace SBMS.Models
         public int CardTypeId { get; set; }
         public CardType CardTypeName { get; set; }
 
-        [RegularExpression(@"\d{4}-?\d{4}-?\d{4}-?\d{4}", ErrorMessage = "Invalid {0}. Please enter 16 digits without spaces or hyphens.")]
+        [RegularExpression(@"\d{4}-?\d{4}-?\d{4}-?\d{4}",
+            ErrorMessage = "Invalid {0}. Please enter 16 digits without spaces or hyphens.")]
         [DataType(DataType.CreditCard)]
         [DisplayFormat(DataFormatString = "{0:####-####-####-####}")]
         [Display(Name = "Card Number")]

@@ -12,8 +12,8 @@ namespace SBMS
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Product", action = "Catalog", id = UrlParameter.Optional }
-            );
+                defaults: new {controller = "Product", action = "Catalog", id = UrlParameter.Optional}
+                );
         }
     }
 }

@@ -12,9 +12,13 @@ namespace SBMS.Models
 
         public void PopulateFromDbContext(SBMSDbContext dbContext)
         {
-            Project = (from thisUsersProject in dbContext.Projects where thisUsersProject.UserId == WebSecurity.CurrentUserId select thisUsersProject).FirstOrDefault();
+            Project = (from thisUsersProject in dbContext.Projects
+                where thisUsersProject.UserId == WebSecurity.CurrentUserId
+                select thisUsersProject).FirstOrDefault();
 
-            Milestones = (from thisProjectsMilestone in dbContext.Milestones where thisProjectsMilestone.ProjectId == Project.ProjectId select thisProjectsMilestone).ToList();
+            Milestones = (from thisProjectsMilestone in dbContext.Milestones
+                where thisProjectsMilestone.ProjectId == Project.ProjectId
+                select thisProjectsMilestone).ToList();
         }
     }
 }

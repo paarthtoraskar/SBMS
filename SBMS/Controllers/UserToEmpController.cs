@@ -24,7 +24,8 @@ namespace SBMS.Controllers
             var tempUserProfiles = new List<UserProfile>();
             foreach (UserProfile userProfile in _usersContext.UserProfiles)
             {
-                if (!Roles.IsUserInRole(userProfile.Username, "emp") && !Roles.IsUserInRole(userProfile.Username, "admin"))
+                if (!Roles.IsUserInRole(userProfile.Username, "emp") &&
+                    !Roles.IsUserInRole(userProfile.Username, "admin"))
                     tempUserProfiles.Add(userProfile);
             }
             return new SelectList(tempUserProfiles, "UserId", "Username");
@@ -40,9 +41,9 @@ namespace SBMS.Controllers
                 {
                     Roles.AddUserToRole(userProfile.Username, "emp");
                     Roles.RemoveUserFromRole(userProfile.Username, "public");
-                    return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Success!" });
+                    return RedirectToAction("UserToEmp", "UserToEmp", new {result = "Success!"});
                 }
-                return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Failure!" });
+                return RedirectToAction("UserToEmp", "UserToEmp", new {result = "Failure!"});
             }
             //return RedirectToAction("UserToEmp", "UserToEmp", new { result = "!ModelState.IsValid" });
             userToEmpViewModel.UserProfilesNotInEmp = FindUserProfilesNotInEmp();

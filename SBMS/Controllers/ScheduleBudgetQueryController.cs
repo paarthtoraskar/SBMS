@@ -18,10 +18,12 @@ namespace SBMS.Controllers
         public ActionResult Result(ContractProposal contract)
         {
             ContractProposal originalContract = (from thisContract in _dbContext.Contracts
-                                                 where thisContract.Username == contract.Username
-                                                 select thisContract).FirstOrDefault();
+                where thisContract.Username == contract.Username
+                select thisContract).FirstOrDefault();
 
-            ViewBag.Message = originalContract == null ? "This customer does not have a contract with us!" : string.Empty;
+            ViewBag.Message = originalContract == null
+                ? "This customer does not have a contract with us!"
+                : string.Empty;
 
             return View("~/Views/ContractProposal/Result.cshtml", originalContract);
         }

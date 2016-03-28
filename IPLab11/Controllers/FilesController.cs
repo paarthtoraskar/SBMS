@@ -16,11 +16,14 @@ namespace IPLab11.Controllers
     {
         public CustomMultipartFormDataStreamProvider(string path)
             : base(path)
-        { }
+        {
+        }
 
         public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders headers)
         {
-            string name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName) ? headers.ContentDisposition.FileName : "NoName";
+            string name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName)
+                ? headers.ContentDisposition.FileName
+                : "NoName";
             return name.Replace("\"", string.Empty);
             //this is here because Chrome submits files in quotation marks which get treated as part of the filename and get escaped
         }
@@ -89,13 +92,15 @@ namespace IPLab11.Controllers
             }
             else
             {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable,
+                    "This request is not properly formatted"));
             }
         }
 
         private string GetFileDepotPathInDomain()
         {
-            string appRoot = Directory.GetParent(Directory.GetParent(HostingEnvironment.MapPath("~")).ToString()).ToString();
+            string appRoot =
+                Directory.GetParent(Directory.GetParent(HostingEnvironment.MapPath("~")).ToString()).ToString();
             string fileDepotPathInDomain = appRoot + "\\SBMS" + "\\Products";
             if (!Directory.Exists(fileDepotPathInDomain))
                 Directory.CreateDirectory(fileDepotPathInDomain);

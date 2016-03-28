@@ -119,7 +119,7 @@ namespace SBMS.Controllers
                 // Use a transaction to prevent the user from deleting their last login credential
                 using (
                     var scope = new TransactionScope(TransactionScopeOption.Required,
-                        new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                        new TransactionOptions {IsolationLevel = IsolationLevel.Serializable}))
                 {
                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)
@@ -131,7 +131,7 @@ namespace SBMS.Controllers
                 }
             }
 
-            return RedirectToAction("Manage", new { Message = message });
+            return RedirectToAction("Manage", new {Message = message});
         }
 
         // GET: /Account/Manage
@@ -179,7 +179,7 @@ namespace SBMS.Controllers
 
                     if (changePasswordSucceeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return RedirectToAction("Manage", new {Message = ManageMessageId.ChangePasswordSuccess});
                     }
                     ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                 }
@@ -199,7 +199,7 @@ namespace SBMS.Controllers
                     try
                     {
                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        return RedirectToAction("Manage", new {Message = ManageMessageId.SetPasswordSuccess});
                     }
                     catch (Exception e)
                     {
@@ -219,7 +219,7 @@ namespace SBMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new {ReturnUrl = returnUrl}));
         }
 
         // GET: /Account/ExternalLoginCallback
@@ -228,7 +228,7 @@ namespace SBMS.Controllers
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
             AuthenticationResult result =
-                OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+                OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new {ReturnUrl = returnUrl}));
             if (!result.IsSuccessful)
             {
                 return RedirectToAction("ExternalLoginFailure");
@@ -250,7 +250,7 @@ namespace SBMS.Controllers
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
             ViewBag.ReturnUrl = returnUrl;
             return View("ExternalLoginConfirmation",
-                new RegisterExternalLoginModel { Username = result.UserName, ExternalLoginData = loginData });
+                new RegisterExternalLoginModel {Username = result.UserName, ExternalLoginData = loginData});
         }
 
         // POST: /Account/ExternalLoginConfirmation
@@ -280,7 +280,7 @@ namespace SBMS.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        _db.UserProfiles.Add(new UserProfile { Username = model.Username });
+                        _db.UserProfiles.Add(new UserProfile {Username = model.Username});
                         _db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Username);
@@ -318,13 +318,13 @@ namespace SBMS.Controllers
         {
             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
             List<ExternalLogin> externalLogins = (from account in accounts
-                                  let clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider)
-                                  select new ExternalLogin
-                                  {
-                                      Provider = account.Provider,
-                                      ProviderDisplayName = clientData.DisplayName,
-                                      ProviderUserId = account.ProviderUserId,
-                                  }).ToList();
+                let clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider)
+                select new ExternalLogin
+                {
+                    Provider = account.Provider,
+                    ProviderDisplayName = clientData.DisplayName,
+                    ProviderUserId = account.ProviderUserId,
+                }).ToList();
 
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 ||
                                        OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));

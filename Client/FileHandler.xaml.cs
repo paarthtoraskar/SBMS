@@ -44,7 +44,7 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var ofd = new OpenFileDialog() { Multiselect = true };
+                var ofd = new OpenFileDialog() {Multiselect = true};
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = new MultipartFormDataContent();
@@ -108,10 +108,12 @@ namespace Client
                         var client = new HttpClient();
                         var requestMessage = new HttpRequestMessage();
                         requestMessage.Method = HttpMethod.Get;
-                        requestMessage.RequestUri = new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
+                        requestMessage.RequestUri =
+                            new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
                         Stream stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
                         string fileName = serverFiles.Items[selectedFileIndex].ToString();
-                        var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create, FileAccess.Write);
+                        var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create,
+                            FileAccess.Write);
                         stream.CopyTo(fileStream);
                         stream.Close();
                         fileStream.Close();
