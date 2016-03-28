@@ -8,8 +8,8 @@ body {
     background-color: #fff;
     border-top: solid 10px #000;
     color: #333;
-    font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: .85em;
     margin: 0;
     padding: 0;
 }
@@ -41,8 +41,8 @@ mark {
 .float-right { float: right; }
 
 .clear-fix:after {
-    content: ".";
     clear: both;
+    content: ".";
     display: block;
     height: 0;
     visibility: hidden;
@@ -95,8 +95,8 @@ h5 a:link, h5 a:visited, h5 a:active {
 header .content-wrapper { padding-top: 20px; }
 
 footer {
-    clear: both;
     background-color: #e2e2e2;
+    clear: both;
     font-size: .8em;
     height: 100px;
 }
@@ -214,9 +214,9 @@ hgroup.title h2 {
 /* features */
 
 section.feature {
-    width: 300px;
     float: left;
     padding: 10px;
+    width: 300px;
 }
 
 /* ordered list */
@@ -307,8 +307,8 @@ aside ul li {
 #loginForm button { width: auto; }
 
 #socialLoginForm {
-    margin-left: 40px;
     float: left;
+    margin-left: 40px;
     width: 40%;
 }
 
@@ -340,8 +340,8 @@ fieldset {
 fieldset legend { display: none; }
 
 fieldset ol {
-    padding: 0;
     list-style: none;
+    padding: 0;
 }
 
 fieldset ol li { padding-bottom: 5px; }
@@ -355,8 +355,8 @@ label {
 label.checkbox { display: inline; }
 
 input, textarea {
-    border: 1px solid #e2e2e2;
     background: #fff;
+    border: 1px solid #e2e2e2;
     color: #333;
     font-size: 1.2em;
     margin: 5px 0 6px 0;
@@ -385,8 +385,8 @@ button {
     cursor: pointer;
     font-size: 1.2em;
     font-weight: 600;
-    padding: 7px;
     margin-right: 8px;
+    padding: 7px;
     width: auto;
 }
 
@@ -394,8 +394,8 @@ td input[type="submit"],
 td input[type="button"],
 td button {
     font-size: 1em;
-    padding: 4px;
     margin-right: 4px;
+    padding: 4px;
 }
 
 /* info and errors */
@@ -438,8 +438,8 @@ input[type="checkbox"].input-validation-error { border: 0 none; }
 
 .validation-summary-errors {
     color: #e80c4d;
-    font-weight: bold;
     font-size: 1.1em;
+    font-weight: bold;
 }
 
 .validation-summary-valid { display: none; }
@@ -448,17 +448,17 @@ input[type="checkbox"].input-validation-error { border: 0 none; }
 ----------------------------------------------------------*/
 
 table {
+    border: 0 none;
     border-collapse: collapse;
     border-spacing: 0;
     margin-top: 0.75em;
-    border: 0 none;
 }
 
 th {
-    font-size: 1.2em;
-    text-align: left;
     border: none 0px;
+    font-size: 1.2em;
     padding-left: 0;
+    text-align: left;
 }
 
 th a {
@@ -469,8 +469,8 @@ th a {
 th a:link, th a:visited, th a:active, th a:hover {
     color: #333;
     font-weight: 600;
-    text-decoration: none;
     padding: 0;
+    text-decoration: none;
 }
 
 th a:hover { color: #000; }
@@ -479,10 +479,10 @@ th.asc a, th.desc a { margin-right: .75em; }
 
 th.asc a:after, th.desc a:after {
     display: block;
+    font-size: 0.75em;
     position: absolute;
     right: 0em;
     top: 0;
-    font-size: 0.75em;
 }
 
 th.asc a:after { content: '▲'; }
@@ -490,8 +490,8 @@ th.asc a:after { content: '▲'; }
 th.desc a:after { content: '▼'; }
 
 td {
-    padding: 0.25em 2em 0.25em 0em;
     border: 0 none;
+    padding: 0.25em 2em 0.25em 0em;
 }
 
 tr.pager td { padding: 0 0.25em 0 0; }
@@ -561,8 +561,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     .featured + .main-content { background-position: 10px 0; }
 
     .content-wrapper {
-        padding-right: 10px;
         padding-left: 10px;
+        padding-right: 10px;
     }
 
     .featured .content-wrapper { padding: 10px; }
@@ -580,8 +580,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     }
 
     ol.round li {
-        padding-left: 10px;
         margin: 25px 0;
+        padding-left: 10px;
     }
 
     ol.round li.zero,
@@ -625,8 +625,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     }
 
     #socialLoginForm {
-        margin-left: 0;
         float: none;
+        margin-left: 0;
         width: auto;
     }
 
@@ -636,9 +636,9 @@ tr.pager td { padding: 0 0.25em 0 0; }
     footer .float-right { float: none; }
 
     footer {
-        text-align: center;
         height: auto;
         padding: 10px 0;
+        text-align: center;
     }
 
     footer p { margin: 0; }

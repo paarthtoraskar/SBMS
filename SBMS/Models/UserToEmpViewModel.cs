@@ -7,7 +7,7 @@ namespace SBMS.Models
     public class UserToEmpViewModel
     {
         [Display(Name = "User")]
-        [Required()]
+        [Required]
         public int UserId { get; set; }
 
         public IEnumerable<SelectListItem> UserProfilesNotInEmp { get; set; }

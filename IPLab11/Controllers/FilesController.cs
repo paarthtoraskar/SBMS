@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 
@@ -19,7 +18,7 @@ namespace IPLab11.Controllers
         {
         }
 
-        public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders headers)
+        public override string GetLocalFileName(HttpContentHeaders headers)
         {
             string name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName)
                 ? headers.ContentDisposition.FileName
@@ -31,20 +30,6 @@ namespace IPLab11.Controllers
 
     public class FilesController : ApiController
     {
-        public class FileDesc
-        {
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public long Size { get; set; }
-
-            public FileDesc(string name, string path, long size)
-            {
-                Name = name;
-                Path = path;
-                Size = size;
-            }
-        }
-
         // GET api/files
         [HttpGet]
         public HttpResponseMessage Get()
@@ -90,11 +75,8 @@ namespace IPLab11.Controllers
                 Task<CustomMultipartFormDataStreamProvider> task = Request.Content.ReadAsMultipartAsync(streamProvider);
                 return task;
             }
-            else
-            {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable,
-                    "This request is not properly formatted"));
-            }
+            throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable,
+                "This request is not properly formatted"));
         }
 
         private string GetFileDepotPathInDomain()
@@ -105,6 +87,20 @@ namespace IPLab11.Controllers
             if (!Directory.Exists(fileDepotPathInDomain))
                 Directory.CreateDirectory(fileDepotPathInDomain);
             return fileDepotPathInDomain;
+        }
+
+        public class FileDesc
+        {
+            public FileDesc(string name, string path, long size)
+            {
+                Name = name;
+                Path = path;
+                Size = size;
+            }
+
+            public string Name { get; set; }
+            public string Path { get; set; }
+            public long Size { get; set; }
         }
     }
 }

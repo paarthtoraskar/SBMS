@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Client
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class FileHandler : Window
     {
@@ -44,7 +44,7 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var ofd = new OpenFileDialog() {Multiselect = true};
+                var ofd = new OpenFileDialog {Multiselect = true};
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = new MultipartFormDataContent();
@@ -59,18 +59,18 @@ namespace Client
                     {
                         if (task.Result.IsSuccessStatusCode)
                         {
-                            System.Windows.MessageBox.Show("File upload succeeded!");
+                            MessageBox.Show("File upload succeeded!");
                         }
                         else
                         {
-                            System.Windows.MessageBox.Show("File upload failed!");
+                            MessageBox.Show("File upload failed!");
                         }
                     });
                 }
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -87,11 +87,11 @@ namespace Client
                 List<string> listOfFilesOnServer = ParseArrayOfJsonObjects(responseContentAsString);
                 serverFiles.Items.Clear();
                 foreach (string file in listOfFilesOnServer)
-                    this.serverFiles.Items.Add(file);
+                    serverFiles.Items.Add(file);
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Client
         {
             try
             {
-                int selectedFileIndex = this.serverFiles.SelectedIndex;
+                int selectedFileIndex = serverFiles.SelectedIndex;
                 if (selectedFileIndex != -1)
                 {
                     var fbd = new FolderBrowserDialog();
@@ -109,7 +109,7 @@ namespace Client
                         var requestMessage = new HttpRequestMessage();
                         requestMessage.Method = HttpMethod.Get;
                         requestMessage.RequestUri =
-                            new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
+                            new Uri("http://localhost:55961/api/files/" + selectedFileIndex);
                         Stream stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
                         string fileName = serverFiles.Items[selectedFileIndex].ToString();
                         var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create,
@@ -120,11 +120,11 @@ namespace Client
                     }
                 }
                 else
-                    System.Windows.MessageBox.Show("Select a file to download!");
+                    MessageBox.Show("Select a file to download!");
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
     }

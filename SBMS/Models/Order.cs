@@ -5,6 +5,14 @@ namespace SBMS.Models
 {
     public class Order
     {
+        public enum CardType
+        {
+            AmericanExpress = 0,
+            Discover = 1,
+            MasterCard = 2,
+            Visa = 3
+        }
+
         [Key]
         public int OrderId { get; set; }
 
@@ -54,13 +62,5 @@ namespace SBMS.Models
 
         [Display(Name = "Total Order Payment")]
         public decimal TotalOrderPayment { get; set; }
-
-        public enum CardType
-        {
-            AmericanExpress = 0,
-            Discover = 1,
-            MasterCard = 2,
-            Visa = 3
-        }
     }
 }

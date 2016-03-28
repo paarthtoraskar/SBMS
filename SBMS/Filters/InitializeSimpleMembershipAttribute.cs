@@ -40,7 +40,7 @@ namespace SBMS.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username",
-                        autoCreateTables: true);
+                        true);
                 }
                 catch (Exception ex)
                 {

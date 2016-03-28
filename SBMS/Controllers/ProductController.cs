@@ -1,10 +1,9 @@
 ﻿using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using SBMS.Models;
-using System.Web.Hosting;
 
 namespace SBMS.Controllers
 {
@@ -160,11 +159,8 @@ namespace SBMS.Controllers
                 //utility.Start();
                 return File(utilityFileName, "application/x-msdownload", "FileTranser.exe");
             }
-            else
-            {
-                //return RedirectToAction("Catalog", "Product", null);
-                return View("Error");
-            }
+            //return RedirectToAction("Catalog", "Product", null);
+            return View("Error");
         }
     }
 }

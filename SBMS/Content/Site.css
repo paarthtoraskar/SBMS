@@ -7,8 +7,8 @@
 body {
     background-color: #fff;
     color: #333;
-    font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: .85em;
     margin: 0;
     padding: 0;
 }
@@ -40,8 +40,8 @@ mark {
 .float-right { float: right; }
 
 .clear-fix:after {
-    content: ".";
     clear: both;
+    content: ".";
     display: block;
     height: 0;
     visibility: hidden;
@@ -95,8 +95,8 @@ h5 a:link, h5 a:visited, h5 a:active {
 header .content-wrapper { padding-top: 20px; }
 
 footer {
-    clear: both;
     background-color: #e2e2e2;
+    clear: both;
     font-size: .8em;
     height: 100px;
 }
@@ -214,9 +214,9 @@ hgroup.title h2 {
 /* features */
 
 section.feature {
-    width: 300px;
     float: left;
     padding: 10px;
+    width: 300px;
 }
 
 /* ordered list */
@@ -307,8 +307,8 @@ aside ul li {
 #loginForm button { width: auto; }
 
 #socialLoginForm {
-    margin-left: 40px;
     float: left;
+    margin-left: 40px;
     width: 40%;
 }
 
@@ -340,8 +340,8 @@ fieldset {
 fieldset legend { display: none; }
 
 fieldset ol {
-    padding: 0;
     list-style: none;
+    padding: 0;
 }
 
 fieldset ol li { padding-bottom: 5px; }
@@ -355,8 +355,8 @@ label {
 label.checkbox { display: inline; }
 
 input, textarea {
-    border: 1px solid #e2e2e2;
     background: #fff;
+    border: 1px solid #e2e2e2;
     color: #333;
     font-size: 1.2em;
     margin: 5px 0 6px 0;
@@ -366,8 +366,8 @@ input, textarea {
 
 textarea {
     font-family: inherit;
-    width: 640px;
     height: 480px;
+    width: 640px;
 }
 
 input:focus, textarea:focus { border: 1px solid #7ac0da; }
@@ -386,8 +386,8 @@ button {
     cursor: pointer;
     font-size: 1.2em;
     font-weight: 600;
-    padding: 7px;
     margin-right: 8px;
+    padding: 7px;
     width: auto;
 }
 
@@ -395,8 +395,8 @@ td input[type="submit"],
 td input[type="button"],
 td button {
     font-size: 1em;
-    padding: 4px;
     margin-right: 4px;
+    padding: 4px;
 }
 
 /* info and errors */
@@ -439,8 +439,8 @@ input[type="checkbox"].input-validation-error { border: 0 none; }
 
 .validation-summary-errors {
     color: #e80c4d;
-    font-weight: bold;
     font-size: 1.1em;
+    font-weight: bold;
 }
 
 .validation-summary-valid { display: none; }
@@ -449,18 +449,18 @@ input[type="checkbox"].input-validation-error { border: 0 none; }
 ----------------------------------------------------------*/
 
 table {
+    border: 0 none;
     border-collapse: collapse;
     border-spacing: 0;
     margin-top: 0.75em;
-    border: 0 none;
     width: 100%;
 }
 
 th {
-    font-size: 1.2em;
-    text-align: left;
     border: none 0px;
+    font-size: 1.2em;
     padding: 5px;
+    text-align: left;
     /*margin: 10px;*/
 }
 
@@ -472,8 +472,8 @@ th a {
 th a:link, th a:visited, th a:active, th a:hover {
     color: #333;
     font-weight: 600;
-    text-decoration: none;
     padding: 0;
+    text-decoration: none;
 }
 
 th a:hover { color: #000; }
@@ -482,10 +482,10 @@ th.asc a, th.desc a { margin-right: .75em; }
 
 th.asc a:after, th.desc a:after {
     display: block;
+    font-size: 0.75em;
     position: absolute;
     right: 0em;
     top: 0;
-    font-size: 0.75em;
 }
 
 th.asc a:after { content: '▲'; }
@@ -565,8 +565,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     .featured + .main-content { background-position: 10px 0; }
 
     .content-wrapper {
-        padding-right: 10px;
         padding-left: 10px;
+        padding-right: 10px;
     }
 
     .featured .content-wrapper { padding: 10px; }
@@ -584,8 +584,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     }
 
     ol.round li {
-        padding-left: 10px;
         margin: 25px 0;
+        padding-left: 10px;
     }
 
     ol.round li.zero,
@@ -629,8 +629,8 @@ tr.pager td { padding: 0 0.25em 0 0; }
     }
 
     #socialLoginForm {
-        margin-left: 0;
         float: none;
+        margin-left: 0;
         width: auto;
     }
 
@@ -640,94 +640,94 @@ tr.pager td { padding: 0 0.25em 0 0; }
     footer .float-right { float: none; }
 
     footer {
-        text-align: center;
         height: auto;
         padding: 10px 0;
+        text-align: center;
     }
 
     footer p { margin: 0; }
 }
 
 ul#menu {
-    font-size: 1em;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
     border: solid;
-    border-color: #7ac0da;
-    border-top-width: 1px;
     border-bottom-width: 0px;
+    border-color: #7ac0da;
     border-left-width: 0px;
     border-right-width: 0px;
+    border-top-width: 1px;
+    font-size: 1em;
+    font-weight: 600;
     list-style: none;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
 ul#menu li {
-    width: 10em;
+    background: white;
+    display: inline-block;
     margin: 0;
     padding: 0;
     position: relative;
-    display: inline-block;
-    background: white;
+    width: 10em;
 }
 
 ul#menu li:hover { color: #333; }
 
 ul#menu a {
-    text-decoration: none;
+    color: #999;
     display: block;
     padding: 10px;
-    color: #999;
+    text-decoration: none;
 }
 
 ul#menu a:hover {
-    text-decoration: none;
+    color: #333;
     display: block;
     padding: 10px;
-    color: #333;
+    text-decoration: none;
 }
 
 ul#menu li ul {
-    position: absolute;
+    border: solid;
+    border-color: #999;
+    border-width: 1px;
     left: -9999px;
     margin: 0;
     padding: 0;
+    position: absolute;
     text-align: center;
-    border: solid;
-    border-width: 1px;
-    border-color: #999;
 }
 
 ul#menu li:hover ul { left: 0; }
 
 ul#menu li ul li {
-    width: 10em;
     display: block;
+    width: 10em;
     z-index: 999;
 }
 
 #bottomMenu {
+    list-style: none;
     margin: 10px;
     padding: 0;
-    list-style: none;
     text-align: center;
 }
 
 #bottomMenu li { display: inline-block; }
 
 .navProduct {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
     text-align: center;
 }
 
 .navProduct li {
+    display: inline-block;
     margin: 10px;
     padding: 0;
     width: 10em;
-    display: inline-block;
 }
 
 .navProduct h3 { height: 20px; }
@@ -737,61 +737,61 @@ ul#menu li ul li {
 .navProduct p { height: 70px; }
 
 .navPortalItem {
+    display: inline-block;
     margin: 10px;
     padding: 0;
     width: 47%;
-    display: inline-block;
 }
 
 #cart {
     font-size: 1em;
     font-weight: bold;
-    text-decoration: none;
-    text-align: right;
     margin: 5px;
+    text-align: right;
+    text-decoration: none;
 }
 
 #cart a {
-    text-decoration: none;
     color: #999;
+    text-decoration: none;
 }
 
 #cart a:hover {
-    text-decoration: none;
     color: #333;
+    text-decoration: none;
 }
 
 #checkout {
-    font-size: 1.5em;
-    font-weight: bolder;
-    text-decoration: none;
-    text-align: right;
     border: solid;
     border-color: white;
     border-width: thin;
     float: right;
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-align: right;
+    text-decoration: none;
 }
 
 #checkout a {
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
 
 #checkout a:hover {
-    text-decoration: none;
     color: #333;
+    text-decoration: none;
 }
 
 select {
-    width: 312px;
     height: 30px;
     margin: 5px 0 6px 0;
+    width: 312px;
 }
 
 .display-field {
+    color: white;
     font-size: 1.2em;
     font-weight: bold;
-    color: white;
     margin: 5px 0 6px 0;
     padding: 5px;
 }

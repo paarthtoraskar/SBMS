@@ -34,6 +34,28 @@ namespace SBMS.Models
         {
         }
 
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<SupportRequest> SupportRequests { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<ContractProposal> Contracts { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Milestone> Milestones { get; set; }
+
+        public DbSet<ProjectIssue> ProjectIssues { get; set; }
+
+        public DbSet<CustomerIssue> CustomerIssues { get; set; }
+
+        public DbSet<MeetingAndEvent> MeetingAndEvents { get; set; }
+
         public void InitializeProductsOnStartup()
         {
             Fill(Path(), Products);
@@ -68,27 +90,5 @@ namespace SBMS.Models
             }
             return true;
         }
-
-        public DbSet<Product> Products { get; set; }
-
-        public DbSet<SupportRequest> SupportRequests { get; set; }
-
-        public DbSet<Cart> Carts { get; set; }
-
-        public DbSet<Order> Orders { get; set; }
-
-        public DbSet<ContractProposal> Contracts { get; set; }
-
-        public DbSet<Customer> Customers { get; set; }
-
-        public DbSet<Project> Projects { get; set; }
-
-        public DbSet<Milestone> Milestones { get; set; }
-
-        public DbSet<ProjectIssue> ProjectIssues { get; set; }
-
-        public DbSet<CustomerIssue> CustomerIssues { get; set; }
-
-        public DbSet<MeetingAndEvent> MeetingAndEvents { get; set; }
     }
 }

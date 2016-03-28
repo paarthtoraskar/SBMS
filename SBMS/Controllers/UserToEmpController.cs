@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using System.Web.Security;
 using SBMS.Models;
@@ -9,8 +7,8 @@ namespace SBMS.Controllers
 {
     public class UserToEmpController : Controller
     {
-        private readonly UsersContext _usersContext = new UsersContext();
         private readonly UserToEmpViewModel _userToEmpViewModel = new UserToEmpViewModel();
+        private readonly UsersContext _usersContext = new UsersContext();
 
         public ActionResult UserToEmp(string result = "")
         {
