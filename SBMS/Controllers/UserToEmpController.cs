@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using System.Web.Security;
 using SBMS.Models;
@@ -18,9 +19,14 @@ namespace SBMS.Controllers
             return View("UserToEmp", _userToEmpViewModel);
         }
 
-        private IEnumerable<SelectListItem> FindUserProfilesNotInEmp()
+        private SelectList FindUserProfilesNotInEmp()
         {
-            var tempUserProfiles = _usersContext.UserProfiles.Where(userProfile => !Roles.IsUserInRole(userProfile.Username, "emp") && !Roles.IsUserInRole(userProfile.Username, "admin")).ToList();
+            var tempUserProfiles = new List<UserProfile>();
+            foreach (UserProfile userProfile in _usersContext.UserProfiles)
+            {
+                if (!Roles.IsUserInRole(userProfile.Username, "emp") && !Roles.IsUserInRole(userProfile.Username, "admin"))
+                    tempUserProfiles.Add(userProfile);
+            }
             return new SelectList(tempUserProfiles, "UserId", "Username");
         }
 
@@ -29,7 +35,7 @@ namespace SBMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userProfile = _usersContext.UserProfiles.Find(userToEmpViewModel.UserId);
+                UserProfile userProfile = _usersContext.UserProfiles.Find(userToEmpViewModel.UserId);
                 if (userProfile != null)
                 {
                     Roles.AddUserToRole(userProfile.Username, "emp");

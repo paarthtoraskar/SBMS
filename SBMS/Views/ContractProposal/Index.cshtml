@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SBMS.Models.ContractProposal>
+﻿@using SBMS.Models
+@model IEnumerable<SBMS.Models.ContractProposal>
 
 @{
     ViewBag.Title = "Index";
@@ -36,7 +37,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (ContractProposal item in Model)
     {
         <tr>
             @*<td>

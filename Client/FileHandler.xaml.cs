@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace Client
@@ -18,7 +19,7 @@ namespace Client
             InitializeComponent();
         }
 
-        private static IEnumerable<string> ParseArrayOfJsonObjects(string str)
+        private static List<string> ParseArrayOfJsonObjects(string str)
         {
             int end, begin = 0;
             var list = new List<string>();
@@ -43,14 +44,14 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var ofd = new OpenFileDialog { Multiselect = true };
+                var ofd = new OpenFileDialog() { Multiselect = true };
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = new MultipartFormDataContent();
-                    foreach (var file in ofd.FileNames)
+                    foreach (string file in ofd.FileNames)
                     {
                         var filestream = new FileStream(file, FileMode.Open, FileAccess.Read);
-                        var fileName = Path.GetFileName(file);
+                        string fileName = Path.GetFileName(file);
                         content.Add(new StreamContent(filestream), "file", fileName);
                     }
                     requestMessage.Content = content;
@@ -81,9 +82,9 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Get;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var responseMessage = client.SendAsync(requestMessage).Result;
+                HttpResponseMessage responseMessage = client.SendAsync(requestMessage).Result;
                 string responseContentAsString = responseMessage.Content.ReadAsStringAsync().Result;
-                var listOfFilesOnServer = ParseArrayOfJsonObjects(responseContentAsString);
+                List<string> listOfFilesOnServer = ParseArrayOfJsonObjects(responseContentAsString);
                 serverFiles.Items.Clear();
                 foreach (string file in listOfFilesOnServer)
                     this.serverFiles.Items.Add(file);
@@ -101,14 +102,14 @@ namespace Client
                 int selectedFileIndex = this.serverFiles.SelectedIndex;
                 if (selectedFileIndex != -1)
                 {
-                    FolderBrowserDialog fbd = new FolderBrowserDialog();
+                    var fbd = new FolderBrowserDialog();
                     if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
                         var client = new HttpClient();
                         var requestMessage = new HttpRequestMessage();
                         requestMessage.Method = HttpMethod.Get;
                         requestMessage.RequestUri = new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
-                        var stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
+                        Stream stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
                         string fileName = serverFiles.Items[selectedFileIndex].ToString();
                         var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create, FileAccess.Write);
                         stream.CopyTo(fileStream);

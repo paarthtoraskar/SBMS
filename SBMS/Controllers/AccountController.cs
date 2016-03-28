@@ -317,7 +317,7 @@ namespace SBMS.Controllers
         public ActionResult RemoveExternalLogins()
         {
             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
-            var externalLogins = (from account in accounts
+            List<ExternalLogin> externalLogins = (from account in accounts
                                   let clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider)
                                   select new ExternalLogin
                                   {

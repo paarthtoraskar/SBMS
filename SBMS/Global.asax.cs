@@ -24,7 +24,7 @@ namespace SBMS
             }
 
             Database.SetInitializer(new UsersContextDbInitializer());
-            UsersContext usersContext = new UsersContext();
+            var usersContext = new UsersContext();
             usersContext.Database.Initialize(true);
 
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<SBMSDbContext>());

@@ -1,10 +1,11 @@
-﻿@model IEnumerable<SBMS.Models.Product>
+﻿@using SBMS.Models
+@model IEnumerable<SBMS.Models.Product>
 
 @{
     ViewBag.Title = "Cart";
 }
 
-@{decimal totalCartPayment = (decimal)Session["TotalCartPayment"];}
+@{var totalCartPayment = (decimal)Session["TotalCartPayment"];}
 
 @if (totalCartPayment > 0)
 {
@@ -18,7 +19,7 @@ else
 <ul class="navProduct">
     @if (Model != null)
     {
-        foreach (var item in Model)
+        foreach (Product item in Model)
         {
         <li>
             <div>

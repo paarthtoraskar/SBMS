@@ -1,4 +1,5 @@
-﻿@model SBMS.Models.DetailsForCustomerViewModel
+﻿@using SBMS.Models
+@model SBMS.Models.DetailsForCustomerViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -36,7 +37,7 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model.Milestones)
+        @foreach (Milestone item in Model.Milestones)
         {
             milestoneSerialNumber++;
             <tr>

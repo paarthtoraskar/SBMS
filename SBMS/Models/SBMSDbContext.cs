@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
@@ -46,10 +47,10 @@ namespace SBMS.Models
             try
             {
                 XDocument doc = XDocument.Load(path);
-                var product = from prod in doc.Elements("ProductCatalog").Elements("Product") select prod;
-                foreach (var elem in product)
+                IEnumerable<XElement> product = from prod in doc.Elements("ProductCatalog").Elements("Product") select prod;
+                foreach (XElement elem in product)
                 {
-                    Product newProduct = new Product();
+                    var newProduct = new Product();
                     newProduct.Name = elem.Element("Name").Value;
                     newProduct.Icon = elem.Element("Icon").Value;
                     newProduct.PunchLine = elem.Element("PunchLine").Value;

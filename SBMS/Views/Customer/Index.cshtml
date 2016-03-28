@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SBMS.Models.Customer>
+﻿@using SBMS.Models
+@model IEnumerable<SBMS.Models.Customer>
 
 @{
     ViewBag.Title = "Index";
@@ -20,7 +21,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (Customer item in Model)
     {
         <tr>
             @*<td>
