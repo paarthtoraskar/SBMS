@@ -79,35 +79,12 @@ namespace IPLab11.Controllers
 
         // POST api/files
         [HttpPost]
-        public Task<IEnumerable<FileDesc>> Post()
+        public Task Post()
         {
-            var folderName = "App_Data";
-            var pathInAPIDomain = HttpContext.Current.Server.MapPath("~/" + folderName);
-
-            var appRoot = Directory.GetParent(Directory.GetParent(pathInAPIDomain).ToString()).ToString();
-            if (!Directory.Exists(appRoot + "\\SBMS" + "\\Products"))
-                Directory.CreateDirectory(appRoot + "\\SBMS" + "\\Products");
-            var pathInAppDomain = appRoot + "\\SBMS" + "\\Products";
-
-            var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
-
             if (Request.Content.IsMimeMultipartContent())
             {
-                //var streamProvider = new CustomMultipartFormDataStreamProvider(pathInAPIDomain);
-                var streamProvider = new CustomMultipartFormDataStreamProvider(pathInAppDomain);
-                var task = Request.Content.ReadAsMultipartAsync(streamProvider).ContinueWith<IEnumerable<FileDesc>>(t =>
-                {
-                    if (t.IsFaulted || t.IsCanceled)
-                    {
-                        throw new HttpResponseException(HttpStatusCode.InternalServerError);
-                    }
-                    var fileInfo = streamProvider.FileData.Select(i =>
-                    {
-                        var info = new FileInfo(i.LocalFileName);
-                        return new FileDesc(info.Name, rootUrl + "/" + folderName + "/" + info.Name, info.Length / 1024);
-                    });
-                    return fileInfo;
-                });
+                var streamProvider = new CustomMultipartFormDataStreamProvider(GetFileDepotPathInDomain());
+                var task = Request.Content.ReadAsMultipartAsync(streamProvider);
                 return task;
             }
             else

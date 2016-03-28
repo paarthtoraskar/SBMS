@@ -44,23 +44,22 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var content = new MultipartFormDataContent();
-                OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true };
+                var ofd = new OpenFileDialog() { Multiselect = true };
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+                    var content = new MultipartFormDataContent();
                     foreach (var file in ofd.FileNames)
                     {
-                        var filestream = new FileStream(file, FileMode.Open);
-                        var fileName = System.IO.Path.GetFileName(file);
+                        var filestream = new FileStream(file, FileMode.Open, FileAccess.Read);
+                        var fileName = Path.GetFileName(file);
                         content.Add(new StreamContent(filestream), "file", fileName);
                     }
                     requestMessage.Content = content;
-
                     client.SendAsync(requestMessage).ContinueWith(task =>
                     {
                         if (task.Result.IsSuccessStatusCode)
                         {
-                            System.Windows.MessageBox.Show("Files uploaded successfully!");
+                            System.Windows.MessageBox.Show("File upload succeeded!");
                         }
                         else
                         {
