@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 
 namespace IPLab11.Controllers
@@ -33,72 +34,42 @@ namespace IPLab11.Controllers
             public string Path { get; set; }
             public long Size { get; set; }
 
-            public FileDesc(string n, string p, long s)
+            public FileDesc(string name, string path, long size)
             {
-                Name = n;
-                Path = p;
-                Size = s;
+                Name = name;
+                Path = path;
+                Size = size;
             }
         }
 
         // GET api/files
+        [HttpGet]
         public HttpResponseMessage Get()
         {
-            string pathInAPIDomain = HttpContext.Current.Server.MapPath("~/App_Data");
-
-            var appRoot = Directory.GetParent(Directory.GetParent(pathInAPIDomain).ToString()).ToString();
-            if (!Directory.Exists(appRoot + "\\SBMS" + "\\Products"))
-                Directory.CreateDirectory(appRoot + "\\SBMS" + "\\Products");
-            var pathInAppDomain = appRoot + "\\SBMS" + "\\Products";
-
-            //string[] files = Directory.GetFiles(pathInAPIDomain);
-            string[] files = Directory.GetFiles(pathInAppDomain);
-
-            for (int i = 0; i < files.Count(); ++i)
-                files[i] = System.IO.Path.GetFileName(files[i]);
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new ObjectContent<IEnumerable<string>>(files, new JsonMediaTypeFormatter());
-            return response;
+            try
+            {
+                var files = Directory.GetFiles(GetFileDepotPathInDomain()).Select(Path.GetFileName);
+                var responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+                responseMessage.Content = new ObjectContent<IEnumerable<string>>(files, new JsonMediaTypeFormatter());
+                return responseMessage;
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
         }
 
         // GET api/files/5
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            string pathInAPIDomain = HttpContext.Current.Server.MapPath("~/App_Data");
-
-            var appRoot = Directory.GetParent(Directory.GetParent(pathInAPIDomain).ToString()).ToString();
-            if (!Directory.Exists(appRoot + "\\SBMS" + "\\Products"))
-                Directory.CreateDirectory(appRoot + "\\SBMS" + "\\Products");
-            var pathInAppDomain = appRoot + "\\SBMS" + "\\Products";
-
-            //string[] files = Directory.GetFiles(pathInAPIDomain);
-            string[] files = Directory.GetFiles(pathInAppDomain);
-
-            for (int i = 0; i < files.Count(); ++i)
-                files[i] = System.IO.Path.GetFileName(files[i]);
-
-            //string filePath = HttpContext.Current.Server.MapPath("~/App_Data/" + files[id]);
-            string filePath = pathInAppDomain + "\\" + files[id];
-            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(filePath);
-
-            if (!File.Exists(filePath))
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-
             try
             {
-                Stream fileStream = File.Open(filePath, FileMode.Open);
-
-                MemoryStream responseStream = new MemoryStream();
-                fileStream.CopyTo(responseStream);
-                fileStream.Close();
-
-                responseStream.Position = 0;
-
-                HttpResponseMessage response = new HttpResponseMessage();
-                bool fullContent = true;
-                response.StatusCode = fullContent ? HttpStatusCode.OK : HttpStatusCode.PartialContent;
-                response.Content = new StreamContent(responseStream);
-                return response;
+                var files = Directory.GetFiles(GetFileDepotPathInDomain());
+                var fileStream = new FileStream(files.ElementAt(id), FileMode.Open, FileAccess.Read);
+                var responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+                responseMessage.Content = new StreamContent(fileStream);
+                return responseMessage;
             }
             catch (IOException)
             {
@@ -107,6 +78,7 @@ namespace IPLab11.Controllers
         }
 
         // POST api/files
+        [HttpPost]
         public Task<IEnumerable<FileDesc>> Post()
         {
             var folderName = "App_Data";
@@ -144,14 +116,13 @@ namespace IPLab11.Controllers
             }
         }
 
-        // PUT api/files/5
-        public void Put(int id, [FromBody]string value)
+        private string GetFileDepotPathInDomain()
         {
-        }
-
-        // DELETE api/files/5
-        public void Delete(int id)
-        {
+            var appRoot = Directory.GetParent(Directory.GetParent(HostingEnvironment.MapPath("~")).ToString()).ToString();
+            var fileDepotPathInDomain = appRoot + "\\SBMS" + "\\Products";
+            if (!Directory.Exists(fileDepotPathInDomain))
+                Directory.CreateDirectory(fileDepotPathInDomain);
+            return fileDepotPathInDomain;
         }
     }
 }

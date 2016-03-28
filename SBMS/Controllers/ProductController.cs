@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using SBMS.Models;
+using System.Web.Hosting;
 
 namespace SBMS.Controllers
 {
@@ -145,22 +146,25 @@ namespace SBMS.Controllers
             return View(ca);
         }
 
+
         public ActionResult StartUtility()
         {
-            string pathInApiDomain = Server.MapPath("~");
+            string pathInApiDomain = HostingEnvironment.MapPath("~");
             string appRoot = Directory.GetParent(Directory.GetParent(pathInApiDomain).ToString()).ToString();
             string utilityFileName = appRoot + "\\Client\\bin\\Debug\\" + "WpfApp.exe";
 
-            var psi = new ProcessStartInfo { FileName = utilityFileName };
-
-            if (!System.IO.File.Exists(utilityFileName))
-                //return RedirectToAction("About", "Home", null);
-                RedirectToAction("Catalog", "Product", null);
-
-            var utility = new Process { StartInfo = psi };
-            utility.Start();
-
-            return RedirectToAction("Catalog", "Product", null);
+            if (System.IO.File.Exists(utilityFileName))
+            {
+                //var psi = new ProcessStartInfo { FileName = utilityFileName };
+                //var utility = new Process { StartInfo = psi };
+                //utility.Start();
+                return File(utilityFileName, "application/x-msdownload", "FileTranser.exe");
+            }
+            else
+            {
+                //return RedirectToAction("Catalog", "Product", null);
+                return View("Error");
+            }
         }
     }
 }

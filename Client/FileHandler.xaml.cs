@@ -40,17 +40,12 @@ namespace Client
         {
             try
             {
-                var message = new HttpRequestMessage();
-                message.Method = HttpMethod.Post;
-                message.RequestUri = new Uri("http://localhost:55961/api/files");
-
+                var client = new HttpClient();
+                var requestMessage = new HttpRequestMessage();
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
                 var content = new MultipartFormDataContent();
-
-                //string sendFolder = "../../SendFiles/";
-                //string[] files = Directory.GetFiles(sendFolder);
-
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Multiselect = true;
+                OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true };
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     foreach (var file in ofd.FileNames)
@@ -59,15 +54,17 @@ namespace Client
                         var fileName = System.IO.Path.GetFileName(file);
                         content.Add(new StreamContent(filestream), "file", fileName);
                     }
+                    requestMessage.Content = content;
 
-                    message.Content = content;
-
-                    var client = new HttpClient();
-                    client.SendAsync(message).ContinueWith(task =>
+                    client.SendAsync(requestMessage).ContinueWith(task =>
                     {
                         if (task.Result.IsSuccessStatusCode)
                         {
                             System.Windows.MessageBox.Show("Files uploaded successfully!");
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("File upload failed!");
                         }
                     });
                 }
@@ -78,22 +75,17 @@ namespace Client
             }
         }
 
-        private void DisplayUpload(object sender, RoutedEventArgs e)
+        private void DisplayCurrentFiles(object sender, RoutedEventArgs e)
         {
             try
             {
                 var client = new HttpClient();
-
-                var message = new HttpRequestMessage();
-                message.Method = HttpMethod.Get;
-                message.RequestUri = new Uri("http://localhost:55961/api/files");
-
-                HttpResponseMessage response = client.SendAsync(message).Result;
-                HttpContent responseContent = response.Content;
-                string responseContentAsString = responseContent.ReadAsStringAsync().Result;
-
-                List<string> listOfFilesOnServer = ParseArrayOfJsonObjects(responseContentAsString);
-
+                var requestMessage = new HttpRequestMessage();
+                requestMessage.Method = HttpMethod.Get;
+                requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
+                var responseMessage = client.SendAsync(requestMessage).Result;
+                string responseContentAsString = responseMessage.Content.ReadAsStringAsync().Result;
+                var listOfFilesOnServer = ParseArrayOfJsonObjects(responseContentAsString);
                 serverFiles.Items.Clear();
                 foreach (string file in listOfFilesOnServer)
                     this.serverFiles.Items.Add(file);
@@ -108,28 +100,23 @@ namespace Client
         {
             try
             {
-                var client = new HttpClient();
-
                 int selectedFileIndex = this.serverFiles.SelectedIndex;
-
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-                if (fbd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-                    return;
-
                 if (selectedFileIndex != -1)
                 {
-                    var message = new HttpRequestMessage();
-                    message.Method = HttpMethod.Get;
-                    message.RequestUri = new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
-
-                    Stream stream = client.GetStreamAsync(message.RequestUri).Result;
-                    string fileName = serverFiles.Items[selectedFileIndex].ToString();
-
-                    //FileStream fileStream = new FileStream("../../RecievedFiles/" + fileName, FileMode.Create, FileAccess.ReadWrite);
-                    FileStream fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create, FileAccess.ReadWrite);
-                    stream.CopyTo(fileStream);
-                    fileStream.Close();
-                    System.Windows.MessageBox.Show("File downloaded successfully!");
+                    FolderBrowserDialog fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        var client = new HttpClient();
+                        var requestMessage = new HttpRequestMessage();
+                        requestMessage.Method = HttpMethod.Get;
+                        requestMessage.RequestUri = new Uri("http://localhost:55961/api/files/" + selectedFileIndex.ToString());
+                        var stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
+                        string fileName = serverFiles.Items[selectedFileIndex].ToString();
+                        var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create, FileAccess.Write);
+                        stream.CopyTo(fileStream);
+                        stream.Close();
+                        fileStream.Close();
+                    }
                 }
                 else
                     System.Windows.MessageBox.Show("Select a file to download!");

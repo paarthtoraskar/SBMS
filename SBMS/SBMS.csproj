@@ -377,6 +377,7 @@
     <Content Include="Views\ContractProposal\Query.cshtml" />
     <Content Include="Views\ContractProposal\Result.cshtml" />
     <Content Include="Views\Home\EmployeeLanding.cshtml" />
+    <Content Include="Views\Shared\Close.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
