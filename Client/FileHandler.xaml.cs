@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace Client
@@ -19,10 +18,10 @@ namespace Client
             InitializeComponent();
         }
 
-        private static List<string> ParseArrayOfJsonObjects(string str)
+        private static IEnumerable<string> ParseArrayOfJsonObjects(string str)
         {
             int end, begin = 0;
-            List<string> list = new List<string>();
+            var list = new List<string>();
             do
             {
                 begin = str.IndexOf('\"', begin) + 1;
@@ -44,7 +43,7 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var ofd = new OpenFileDialog() { Multiselect = true };
+                var ofd = new OpenFileDialog { Multiselect = true };
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = new MultipartFormDataContent();
