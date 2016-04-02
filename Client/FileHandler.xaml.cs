@@ -36,7 +36,7 @@ namespace Client
             return list;
         }
 
-        private void UploadFiles(object sender, RoutedEventArgs e)
+        private async void UploadFiles(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Client
                 var requestMessage = new HttpRequestMessage();
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = new Uri("http://localhost:55961/api/files");
-                var ofd = new OpenFileDialog {Multiselect = true};
+                var ofd = new OpenFileDialog { Multiselect = true };
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = new MultipartFormDataContent();
@@ -55,17 +55,11 @@ namespace Client
                         content.Add(new StreamContent(filestream), "file", fileName);
                     }
                     requestMessage.Content = content;
-                    client.SendAsync(requestMessage).ContinueWith(task =>
-                    {
-                        if (task.Result.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show("File upload succeeded!");
-                        }
-                        else
-                        {
-                            MessageBox.Show("File upload failed!");
-                        }
-                    });
+                    var responseMessage = await client.SendAsync(requestMessage);
+                    if (responseMessage.IsSuccessStatusCode)
+                        MessageBox.Show("File upload succeeded!");
+                    else
+                        MessageBox.Show("File upload failed!");
                 }
             }
             catch (Exception ex)
@@ -95,7 +89,7 @@ namespace Client
             }
         }
 
-        private void DownloadFiles(object sender, RoutedEventArgs e)
+        private async void DownloadFiles(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -108,15 +102,14 @@ namespace Client
                         var client = new HttpClient();
                         var requestMessage = new HttpRequestMessage();
                         requestMessage.Method = HttpMethod.Get;
-                        requestMessage.RequestUri =
-                            new Uri("http://localhost:55961/api/files/" + selectedFileIndex);
-                        Stream stream = client.GetStreamAsync(requestMessage.RequestUri).Result;
+                        requestMessage.RequestUri = new Uri("http://localhost:55961/api/files/" + selectedFileIndex);
+                        var stream = await client.GetStreamAsync(requestMessage.RequestUri);
                         string fileName = serverFiles.Items[selectedFileIndex].ToString();
-                        var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create,
-                            FileAccess.Write);
+                        var fileStream = new FileStream(fbd.SelectedPath + '/' + fileName, FileMode.Create, FileAccess.Write);
                         stream.CopyTo(fileStream);
                         stream.Close();
                         fileStream.Close();
+                        MessageBox.Show("File download succeeded!");
                     }
                 }
                 else

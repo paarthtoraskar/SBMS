@@ -67,16 +67,15 @@ namespace IPLab11.Controllers
 
         // POST api/files
         [HttpPost]
-        public Task Post()
+        public async Task Post()
         {
             if (Request.Content.IsMimeMultipartContent())
             {
                 var streamProvider = new CustomMultipartFormDataStreamProvider(GetFileDepotPathInDomain());
-                Task<CustomMultipartFormDataStreamProvider> task = Request.Content.ReadAsMultipartAsync(streamProvider);
-                return task;
+                await Request.Content.ReadAsMultipartAsync(streamProvider);
             }
-            throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable,
-                "This request is not properly formatted"));
+            else
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
         }
 
         private string GetFileDepotPathInDomain()
@@ -87,20 +86,6 @@ namespace IPLab11.Controllers
             if (!Directory.Exists(fileDepotPathInDomain))
                 Directory.CreateDirectory(fileDepotPathInDomain);
             return fileDepotPathInDomain;
-        }
-
-        public class FileDesc
-        {
-            public FileDesc(string name, string path, long size)
-            {
-                Name = name;
-                Path = path;
-                Size = size;
-            }
-
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public long Size { get; set; }
         }
     }
 }
