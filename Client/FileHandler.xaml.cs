@@ -10,7 +10,7 @@ using MessageBox = System.Windows.MessageBox;
 namespace Client
 {
     /// <summary>
-    ///     Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class FileHandler : Window
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SBMS.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
-using SBMS.Models;
 using WebMatrix.WebData;
 
 namespace SBMS
@@ -86,7 +86,7 @@ namespace SBMS
             }
             if (!Roles.GetRolesForUser("admin").Contains("admin"))
             {
-                Roles.AddUsersToRoles(new[] {"admin"}, new[] {"admin"});
+                Roles.AddUsersToRoles(new[] { "admin" }, new[] { "admin" });
             }
             base.Seed(userContext);
         }

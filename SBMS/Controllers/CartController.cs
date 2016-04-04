@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SBMS.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using SBMS.Models;
 
 namespace SBMS.Controllers
 {
@@ -120,13 +120,13 @@ namespace SBMS.Controllers
             {
                 return HttpNotFound();
             }
-            var products = ((List<Product>) (HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             if (products.Find(productToBeAdded => productToBeAdded.ProductId == productFound.ProductId) == null)
                 products.Add(productFound);
             else
                 return View("~/Views/Product/Catalog.cshtml", _db.Products.ToList());
 
-            var totalCartPayment = (decimal) Session["TotalCartPayment"];
+            var totalCartPayment = (decimal)Session["TotalCartPayment"];
             totalCartPayment += productFound.Price;
             Session["TotalCartPayment"] = totalCartPayment;
 
@@ -135,7 +135,7 @@ namespace SBMS.Controllers
 
         public ActionResult ViewCart()
         {
-            var products = ((List<Product>) (HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             return View("~/Views/Cart/CartView.cshtml", products);
         }
 
@@ -146,10 +146,10 @@ namespace SBMS.Controllers
             {
                 return HttpNotFound();
             }
-            var products = ((List<Product>) (HttpContext.Session["ProductsInCart"]));
+            var products = ((List<Product>)(HttpContext.Session["ProductsInCart"]));
             products.RemoveAll(productToBeRemoved => productToBeRemoved.ProductId == productFound.ProductId);
 
-            var totalCartPayment = (decimal) Session["TotalCartPayment"];
+            var totalCartPayment = (decimal)Session["TotalCartPayment"];
             totalCartPayment -= productFound.Price;
             Session["TotalCartPayment"] = totalCartPayment;
 

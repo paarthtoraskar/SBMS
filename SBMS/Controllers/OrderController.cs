@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SBMS.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using SBMS.Models;
 using WebMatrix.WebData;
 
 namespace SBMS.Controllers
@@ -50,12 +50,12 @@ namespace SBMS.Controllers
         // returns a SelectList for populating the Card Type combobox
         private IEnumerable<SelectListItem> CardTypeEnumList()
         {
-            string[] names = Enum.GetNames(typeof (Order.CardType));
-            Array values = Enum.GetValues(typeof (Order.CardType));
+            string[] names = Enum.GetNames(typeof(Order.CardType));
+            Array values = Enum.GetValues(typeof(Order.CardType));
             IList<SelectListItem> items = new List<SelectListItem>();
             for (int i = 0; i < names.Length; i++)
             {
-                var val = (int) values.GetValue(i);
+                var val = (int)values.GetValue(i);
                 items.Add(new SelectListItem
                 {
                     Text = names[i],
@@ -77,7 +77,7 @@ namespace SBMS.Controllers
                 order.CartId = Session["CartId"] as string;
                 order.UserId = WebSecurity.CurrentUserId;
                 order.Username = WebSecurity.CurrentUserName;
-                order.TotalOrderPayment = (decimal) Session["TotalCartPayment"];
+                order.TotalOrderPayment = (decimal)Session["TotalCartPayment"];
 
                 _db.Orders.Add(order);
                 _db.SaveChanges();
@@ -96,7 +96,7 @@ namespace SBMS.Controllers
             if (productsInCart != null)
                 foreach (Product product in productsInCart)
                 {
-                    var newCart = new Cart {CartId = cartId, ProductId = product.ProductId};
+                    var newCart = new Cart { CartId = cartId, ProductId = product.ProductId };
                     _db.Carts.Add(newCart);
                     _db.SaveChanges();
                 }

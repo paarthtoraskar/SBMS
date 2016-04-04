@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SBMS.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Security;
-using SBMS.Models;
 
 namespace SBMS.Controllers
 {
@@ -39,9 +39,9 @@ namespace SBMS.Controllers
                 {
                     Roles.AddUserToRole(userProfile.Username, "emp");
                     Roles.RemoveUserFromRole(userProfile.Username, "public");
-                    return RedirectToAction("UserToEmp", "UserToEmp", new {result = "Success!"});
+                    return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Success!" });
                 }
-                return RedirectToAction("UserToEmp", "UserToEmp", new {result = "Failure!"});
+                return RedirectToAction("UserToEmp", "UserToEmp", new { result = "Failure!" });
             }
             //return RedirectToAction("UserToEmp", "UserToEmp", new { result = "!ModelState.IsValid" });
             userToEmpViewModel.UserProfilesNotInEmp = FindUserProfilesNotInEmp();

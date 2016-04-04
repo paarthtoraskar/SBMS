@@ -10,7 +10,7 @@ namespace SBMS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("Default", "{controller}/{action}/{id}",
-                new {controller = "Product", action = "Catalog", id = UrlParameter.Optional}
+                new { controller = "Product", action = "Catalog", id = UrlParameter.Optional }
                 );
         }
     }

@@ -2,56 +2,56 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - Jello Software</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Jello Software</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
 
-    <body>
-        <header>
-            <div>
-                <div class="content-wrapper">
-                    <div class="float-left">
-                        <p style="vertical-align: bottom;" class="site-title">@Html.ActionLink("Jello Software", "Catalog", "Product")</p>
-                    </div>
-                    <div @*class="float-right"*@>
-                        <div id="cart">
-                            @Html.ActionLink("View Cart", "ViewCart", "Cart")
-                            (
+<body>
+    <header>
+        <div>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p style="vertical-align: bottom;" class="site-title">@Html.ActionLink("Jello Software", "Catalog", "Product")</p>
+                </div>
+                <div @*class="float-right"*@>
+                    <div id="cart">
+                        @Html.ActionLink("View Cart", "ViewCart", "Cart")
+                        (
                             @{
                                 var products = Session["ProductsInCart"] as List<Product>;
                                 if (products != null)
                                 {
-                                    @products.Count
+                                @products.Count
                                 }
                                 else
                                 {
                                     const char zero = '0';
-                                    @zero
+                                @zero
                                 }
                             }
-                            )
-                        </div>
-                        <section id="login">
-                            @Html.Partial("_LoginPartial")
-                        </section>
+                        )
                     </div>
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
                 </div>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Catalog", "Catalog", "Product")</li>
-                    <li>@Html.ActionLink("Support", "Create", "SupportRequest")</li>
-                    @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp") || Roles.IsUserInRole("public"))
-                    {
-                        <li>@Html.ActionLink("Contract", "SelectViewBasedOnContractStatus", "ContractProposal")</li>
-                    }
-                    @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp"))
-                    {
-                        <li>
-                            @*<a href="#">Employee</a>
+            </div>
+            <ul id="menu">
+                <li>@Html.ActionLink("Catalog", "Catalog", "Product")</li>
+                <li>@Html.ActionLink("Support", "Create", "SupportRequest")</li>
+                @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp") || Roles.IsUserInRole("public"))
+                {
+                    <li>@Html.ActionLink("Contract", "SelectViewBasedOnContractStatus", "ContractProposal")</li>
+                }
+                @if (Roles.IsUserInRole("admin") || Roles.IsUserInRole("emp"))
+                {
+                    <li>
+                        @*<a href="#">Employee</a>
                         <ul>
                             <li>@Html.ActionLink("Employee Portal", "EmployeeLanding", "Home")</li>
                             <li>@Html.ActionLink("Support Requests", "Index", "SupportRequest")</li>
@@ -65,54 +65,54 @@
                             <li>@Html.ActionLink("Meetings And Events", "Index", "MeetingAndEvent")</li>
                             <li>@Html.ActionLink("File Handler", "StartUtility", "Product")</li>
                         </ul>*@
-                            @Html.ActionLink("Employee Portal", "EmployeeLanding", "Home")
-                        </li>
-                    }
-                    @if (Roles.IsUserInRole("admin"))
-                    {
-                        <li>
-                            <a href="#">Admin</a>
-                            <ul>
-                                <li>@Html.ActionLink("File Handler", "StartUtility", "Product")</li>
-                                <li>@Html.ActionLink("Give Employee Role", "UserToEmp", "UserToEmp")</li>
-                                <li>@Html.ActionLink("Orders", "Index", "Order")</li>
-                                @*<li>@Html.ActionLink("Carts", "Index", "Cart")</li>*@
-                                <li>@Html.ActionLink("Catalog", "Index", "Product")</li>
-                            </ul>
-                        </li>
-                    }
+                        @Html.ActionLink("Employee Portal", "EmployeeLanding", "Home")
+                    </li>
+                }
+                @if (Roles.IsUserInRole("admin"))
+                {
+                    <li>
+                        <a href="#">Admin</a>
+                        <ul>
+                            <li>@Html.ActionLink("File Handler", "StartUtility", "Product")</li>
+                            <li>@Html.ActionLink("Give Employee Role", "UserToEmp", "UserToEmp")</li>
+                            <li>@Html.ActionLink("Orders", "Index", "Order")</li>
+                            @*<li>@Html.ActionLink("Carts", "Index", "Cart")</li>*@
+                            <li>@Html.ActionLink("Catalog", "Index", "Product")</li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </header>
+
+    <div id="body">
+        <section class="content-wrapper main-content clear-fix">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h3>@ViewBag.Message</h3>
+            </hgroup>
+            @RenderBody()
+        </section>
+    </div>
+
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <ul id="bottomMenu">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Sitemap", string.Empty, string.Empty)</li>
+                    <li>@Html.ActionLink("Privacy Policy", string.Empty, string.Empty)</li>
+                    <li>@Html.ActionLink("Terms of Use", string.Empty, string.Empty)</li>
                 </ul>
             </div>
-        </header>
-
-        <div id="body">
-            <section class="content-wrapper main-content clear-fix">
-                <hgroup class="title">
-                    <h1>@ViewBag.Title</h1>
-                    <h3>@ViewBag.Message</h3>
-                </hgroup>
-                @RenderBody()
-            </section>
-        </div>
-
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <ul id="bottomMenu">
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Sitemap", string.Empty, string.Empty)</li>
-                        <li>@Html.ActionLink("Privacy Policy", string.Empty, string.Empty)</li>
-                        <li>@Html.ActionLink("Terms of Use", string.Empty, string.Empty)</li>
-                    </ul>
-                </div>
-                <div class="float-right">
-                    <p>&copy; @DateTime.Now.Year - Jello Software Ltd.</p>
-                </div>
+            <div class="float-right">
+                <p>&copy; @DateTime.Now.Year - Jello Software Ltd.</p>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", false)
-    </body>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", false)
+</body>
 </html>

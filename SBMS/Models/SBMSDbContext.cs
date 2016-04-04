@@ -72,7 +72,7 @@ namespace SBMS.Models
             {
                 XDocument doc = XDocument.Load(path);
                 IEnumerable<XElement> product = from prod in doc.Elements("ProductCatalog").Elements("Product")
-                    select prod;
+                                                select prod;
                 foreach (XElement elem in product)
                 {
                     var newProduct = new Product();

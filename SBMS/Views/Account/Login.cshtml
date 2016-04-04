@@ -5,7 +5,7 @@
 }
 
 <section id="loginForm">
-    @using (Html.BeginForm(new {ViewBag.ReturnUrl}))
+    @using (Html.BeginForm(new { ViewBag.ReturnUrl }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -15,7 +15,7 @@
             <ol>
                 <li>
                     @Html.LabelFor(m => m.Username)
-                    @Html.TextBoxFor(m => m.Username, new {autofocus = "autofocus"})
+                    @Html.TextBoxFor(m => m.Username, new { autofocus = "autofocus" })
                     @Html.ValidationMessageFor(m => m.Username)
                 </li>
                 <li>
@@ -25,7 +25,7 @@
                 </li>
                 <li>
                     @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe, new {@class = "checkbox"})
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
                 </li>
             </ol>
             <input type="submit" value="Log in" />

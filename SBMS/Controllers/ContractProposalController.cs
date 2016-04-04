@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SBMS.Models;
+using System;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
-using SBMS.Models;
 using WebMatrix.WebData;
 
 namespace SBMS.Controllers
@@ -68,7 +68,7 @@ namespace SBMS.Controllers
                 //return RedirectToAction("Index");
 
                 return RedirectToAction("Details", "ContractProposal",
-                    new {id = contract.ContractProposalId, headerMessage = "Created now!"});
+                    new { id = contract.ContractProposalId, headerMessage = "Created now!" });
             }
 
             return View(contract);
@@ -127,7 +127,7 @@ namespace SBMS.Controllers
             _db.Entry(contract).State = EntityState.Modified;
             _db.SaveChanges();
             //return RedirectToAction("Index");
-            return RedirectToAction("Details", "ContractProposal", new {id = contract.ContractProposalId});
+            return RedirectToAction("Details", "ContractProposal", new { id = contract.ContractProposalId });
         }
 
         private void LoadUneditableValues(ContractProposal originalContract, ContractProposal editedContract)
@@ -172,17 +172,17 @@ namespace SBMS.Controllers
         public RedirectToRouteResult SelectViewBasedOnContractStatus()
         {
             ContractProposal thisUsersContract = (from contract in _db.Contracts
-                where
-                    (contract.UserId == WebSecurity.CurrentUserId)
-                select contract).FirstOrDefault();
+                                                  where
+                                                      (contract.UserId == WebSecurity.CurrentUserId)
+                                                  select contract).FirstOrDefault();
 
             if (thisUsersContract == null)
                 return RedirectToAction("WelcomeContractView", "ContractProposal");
             if (!thisUsersContract.Approved)
-                return RedirectToAction("Details", "ContractProposal", new {id = thisUsersContract.ContractProposalId});
+                return RedirectToAction("Details", "ContractProposal", new { id = thisUsersContract.ContractProposalId });
             if (thisUsersContract.Approved)
                 return RedirectToAction("ContractOrProjectView", "ContractProposal",
-                    new {id = thisUsersContract.ContractProposalId});
+                    new { id = thisUsersContract.ContractProposalId });
             return RedirectToAction("HttpNotFoundView", "ContractProposal");
         }
 

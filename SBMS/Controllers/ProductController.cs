@@ -1,9 +1,9 @@
-﻿using System.Data;
+﻿using SBMS.Models;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using SBMS.Models;
 
 namespace SBMS.Controllers
 {
@@ -144,7 +144,6 @@ namespace SBMS.Controllers
         {
             return View(ca);
         }
-
 
         public ActionResult StartUtility()
         {
