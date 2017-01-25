@@ -12,7 +12,7 @@ namespace SBMS.Models
 
         public string Icon { get; set; }
 
-        public string PunchLine { get; set; }
+        public string Descriptor { get; set; }
 
         public string Message { get; set; }
 

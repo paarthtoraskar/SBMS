@@ -1,11 +1,11 @@
-Here are some pertinent points -
+fHere are some pertinent points -
 
 - This web app is a business management app for a small, fictional software application development company.
 - This was built in Spring 2013, my first semester in grad school, as a credit requirement for a course and was my first foray into ASP.NET MVC. The point was to try out several of its features and get a good working knowledge. As a consequence, there are parts of this project that do not fit into the whole product or are incomplete. Recently, I've made some key updates.
 - This is an ASP.NET MVC solution targeting .NET 4.5 built using the VS2012 IDE.
 - There is an ASP.NET Web API project that handles the server side functionality of the file handler mentioned below.
 - There is also a small Windows WPF project that handles the client side of that file handler.
-- The three roles - public, emp, admin - determine what features are available to the curresponding users - general public, employees, and administrators respectively.
+- The three roles - public, emp, admin - determine what features are available to the corresponding users - general public, employees, and administrators respectively.
 - There are currently three users registered for demo purposes - "public", "emp", and "admin" - all with the password "password".
 
 **The features that are not self-explanatory are described below -

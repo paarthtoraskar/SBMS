@@ -78,7 +78,7 @@ namespace SBMS.Models
                     var newProduct = new Product();
                     newProduct.Name = elem.Element("Name").Value;
                     newProduct.Icon = elem.Element("Icon").Value;
-                    newProduct.PunchLine = elem.Element("PunchLine").Value;
+                    newProduct.Descriptor = elem.Element("Descriptor").Value;
                     newProduct.Message = elem.Element("Message").Value;
                     newProduct.Price = decimal.Parse(elem.Element("Price").Value);
                     products.Add(newProduct);

@@ -4,7 +4,7 @@
   <Product>
     <Name>JustPushPlay</Name>
     <Icon>JustPushPlay.png</Icon>
-    <PunchLine>Music and Movie Player</PunchLine>
+    <Descriptor>Music and Movie Player</Descriptor>
     <Message>Play all your audio and video files!</Message>
     <Price>20</Price>
   </Product>
@@ -12,7 +12,7 @@
   <Product>
     <Name>PicturePerfect</Name>
     <Icon>PicturePerfect.png</Icon>
-    <PunchLine>Photo Editor</PunchLine>
+    <Descriptor>Photo Editor</Descriptor>
     <Message>Edit your photos. Give them a new life!</Message>
     <Price>25</Price>
   </Product>
@@ -20,7 +20,7 @@
   <Product>
     <Name>MovieMan</Name>
     <Icon>MovieMan.png</Icon>
-    <PunchLine>Movie Creater</PunchLine>
+    <Descriptor>Movie Creater</Descriptor>
     <Message>Paste together images, audio and video to make movies!</Message>
     <Price>35</Price>
   </Product>
@@ -28,7 +28,7 @@
   <Product>
     <Name>CompressIt</Name>
     <Icon>CompressIt.png</Icon>
-    <PunchLine>File Compressor</PunchLine>
+    <Descriptor>File Compressor</Descriptor>
     <Message>Your files occupy less space so you can do more with it!</Message>
     <Price>15</Price>
   </Product>
@@ -36,7 +36,7 @@
   <Product>
     <Name>CleanAll</Name>
     <Icon>CleanAll.png</Icon>
-    <PunchLine>Clean and Optimize</PunchLine>
+    <Descriptor>Clean and Optimize</Descriptor>
     <Message>Clean the mess. Optimize the performance</Message>
     <Price>10</Price>
   </Product>
