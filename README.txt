@@ -1,4 +1,4 @@
-fHere are some pertinent points -
+Here are some pertinent points -
 
 - This web app is a business management app for a small, fictional software application development company.
 - This was built in Spring 2013, my first semester in grad school, as a credit requirement for a course and was my first foray into ASP.NET MVC. The point was to try out several of its features and get a good working knowledge. As a consequence, there are parts of this project that do not fit into the whole product or are incomplete. Recently, I've made some key updates.
