@@ -14,7 +14,7 @@ A small native Windows client is downloaded to the users computer.
 This client interacts with the Web API to handle multi-file upload and single-file download of relevant files that can then be consumed by the main application.
 For instance, the "ProductData.xml" file in the App_Data folder of the main application is what the Catalog web page sources its display items from.
 -Give Employee Role
-Moves a user from the public role to the employee role, thereby making the employee-only features available the said user.
+Moves a user from the public role to the employee role, thereby making the employee-only features available to the said user.
 -Catalog and Cart
 Facilitate sale of listed fictional products
 -Contract
@@ -28,7 +28,7 @@ Once a proposed Contract is approved by an admin, it is auto-added to the Projec
 -Customers
 Once a users proposed Contract is approved by an admin, (s)he is auto-added to the Customers list
 
-**Known issues -
+**Known issues (To-do?) -
 - Although roles have been defined, pages do not currently authenticate users against their roles. Having a direct link to a page makes the whole idea of roles pointless. :(
 - The Contract and Project models (and other models) are barebone placeholders - certainly not exhaustive (or useful!).
 - External authentication using OpenId (OAuth?) can (should!) easily be added.
